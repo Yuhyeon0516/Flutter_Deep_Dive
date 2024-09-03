@@ -1,8 +1,15 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
-class HomeScreen extends StatelessWidget {
+class HomeScreen extends StatefulWidget {
   const HomeScreen({super.key});
+
+  @override
+  State<HomeScreen> createState() => _HomeScreenState();
+}
+
+class _HomeScreenState extends State<HomeScreen> {
+  DateTime selectedDate = DateTime.now();
 
   @override
   Widget build(BuildContext context) {
@@ -12,14 +19,47 @@ class HomeScreen extends StatelessWidget {
         bottom: false,
         child: SizedBox(
           width: MediaQuery.of(context).size.width,
-          child: const Column(
+          child: Column(
             children: [
-              _Top(),
-              _Bottom(),
+              _Top(
+                selectedDate: selectedDate,
+                onPressed: onHeartPressed,
+              ),
+              const _Bottom(),
             ],
           ),
         ),
       ),
+    );
+  }
+
+  void onHeartPressed() {
+    showCupertinoDialog(
+      context: context,
+      builder: (BuildContext context) {
+        return Align(
+          alignment: Alignment.center,
+          child: Container(
+            margin: const EdgeInsets.symmetric(horizontal: 24),
+            height: 300,
+            decoration: BoxDecoration(
+              borderRadius: BorderRadius.circular(16),
+              color: Colors.white,
+            ),
+            child: CupertinoDatePicker(
+              mode: CupertinoDatePickerMode.date,
+              onDateTimeChanged: (DateTime date) {
+                setState(() {
+                  selectedDate = date;
+                });
+              },
+              dateOrder: DatePickerDateOrder.ymd,
+            ),
+          ),
+        );
+      },
+      // dialog 외부를 눌렀을때 dismiss할건지
+      barrierDismissible: true,
     );
   }
 }
@@ -37,17 +77,15 @@ class _Bottom extends StatelessWidget {
   }
 }
 
-class _Top extends StatefulWidget {
+class _Top extends StatelessWidget {
+  final DateTime selectedDate;
+  final VoidCallback onPressed;
+
   const _Top({
     super.key,
+    required this.selectedDate,
+    required this.onPressed,
   });
-
-  @override
-  State<_Top> createState() => _TopState();
-}
-
-class _TopState extends State<_Top> {
-  DateTime selectedDate = DateTime.now();
 
   @override
   Widget build(BuildContext context) {
@@ -70,35 +108,7 @@ class _TopState extends State<_Top> {
             style: textTheme.bodyMedium,
           ),
           IconButton(
-            onPressed: () {
-              showCupertinoDialog(
-                context: context,
-                builder: (BuildContext context) {
-                  return Align(
-                    alignment: Alignment.center,
-                    child: Container(
-                      margin: const EdgeInsets.symmetric(horizontal: 24),
-                      height: 300,
-                      decoration: BoxDecoration(
-                        borderRadius: BorderRadius.circular(16),
-                        color: Colors.white,
-                      ),
-                      child: CupertinoDatePicker(
-                        mode: CupertinoDatePickerMode.date,
-                        onDateTimeChanged: (DateTime date) {
-                          setState(() {
-                            selectedDate = date;
-                          });
-                        },
-                        dateOrder: DatePickerDateOrder.ymd,
-                      ),
-                    ),
-                  );
-                },
-                // dialog 외부를 눌렀을때 dismiss할건지
-                barrierDismissible: true,
-              );
-            },
+            onPressed: onPressed,
             icon: const Icon(
               Icons.favorite,
             ),
