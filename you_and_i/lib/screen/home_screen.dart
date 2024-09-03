@@ -1,3 +1,4 @@
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
 class HomeScreen extends StatelessWidget {
@@ -36,14 +37,23 @@ class _Bottom extends StatelessWidget {
   }
 }
 
-class _Top extends StatelessWidget {
+class _Top extends StatefulWidget {
   const _Top({
     super.key,
   });
 
   @override
+  State<_Top> createState() => _TopState();
+}
+
+class _TopState extends State<_Top> {
+  DateTime selectedDate = DateTime.now();
+
+  @override
   Widget build(BuildContext context) {
+    final now = DateTime.now();
     final textTheme = Theme.of(context).textTheme;
+
     return Expanded(
       child: Column(
         children: [
@@ -56,11 +66,39 @@ class _Top extends StatelessWidget {
             style: textTheme.bodyLarge,
           ),
           Text(
-            "2023.02.11",
+            '${selectedDate.year}.${selectedDate.month}.${selectedDate.day}',
             style: textTheme.bodyMedium,
           ),
           IconButton(
-            onPressed: () {},
+            onPressed: () {
+              showCupertinoDialog(
+                context: context,
+                builder: (BuildContext context) {
+                  return Align(
+                    alignment: Alignment.center,
+                    child: Container(
+                      margin: const EdgeInsets.symmetric(horizontal: 24),
+                      height: 300,
+                      decoration: BoxDecoration(
+                        borderRadius: BorderRadius.circular(16),
+                        color: Colors.white,
+                      ),
+                      child: CupertinoDatePicker(
+                        mode: CupertinoDatePickerMode.date,
+                        onDateTimeChanged: (DateTime date) {
+                          setState(() {
+                            selectedDate = date;
+                          });
+                        },
+                        dateOrder: DatePickerDateOrder.ymd,
+                      ),
+                    ),
+                  );
+                },
+                // dialog 외부를 눌렀을때 dismiss할건지
+                barrierDismissible: true,
+              );
+            },
             icon: const Icon(
               Icons.favorite,
             ),
@@ -68,7 +106,7 @@ class _Top extends StatelessWidget {
             color: Colors.red,
           ),
           Text(
-            "D+1",
+            "D+${now.difference(selectedDate).inDays + 1}",
             style: textTheme.displayMedium,
           )
         ],
