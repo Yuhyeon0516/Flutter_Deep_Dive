@@ -53,6 +53,8 @@ class _HomeScreenState extends State<HomeScreen> {
                   selectedDate = date;
                 });
               },
+              initialDateTime: selectedDate,
+              maximumDate: DateTime.now(),
               dateOrder: DatePickerDateOrder.ymd,
             ),
           ),
