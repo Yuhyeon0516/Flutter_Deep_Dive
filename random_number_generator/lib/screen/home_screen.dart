@@ -2,6 +2,7 @@ import 'dart:math';
 
 import 'package:flutter/material.dart';
 import 'package:random_number_generator/constant/color.dart';
+import 'package:random_number_generator/screen/setting_screen.dart';
 
 class HomeScreen extends StatefulWidget {
   const HomeScreen({super.key});
@@ -25,7 +26,9 @@ class _HomeScreenState extends State<HomeScreen> {
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.stretch,
             children: [
-              const _Header(),
+              _Header(
+                onPressed: onSettingPressed,
+              ),
               _Body(
                 numbers: numbers,
               ),
@@ -52,6 +55,16 @@ class _HomeScreenState extends State<HomeScreen> {
     setState(() {
       numbers = newNumbers.toList();
     });
+  }
+
+  void onSettingPressed() {
+    Navigator.of(context).push(
+      MaterialPageRoute(
+        builder: (BuildContext context) {
+          return const SettingScreen();
+        },
+      ),
+    );
   }
 }
 
@@ -111,9 +124,8 @@ class _Body extends StatelessWidget {
 }
 
 class _Header extends StatelessWidget {
-  const _Header({
-    super.key,
-  });
+  final VoidCallback onPressed;
+  const _Header({super.key, required this.onPressed});
 
   @override
   Widget build(BuildContext context) {
@@ -129,7 +141,7 @@ class _Header extends StatelessWidget {
           ),
         ),
         IconButton(
-          onPressed: () {},
+          onPressed: onPressed,
           icon: const Icon(
             Icons.settings,
           ),
