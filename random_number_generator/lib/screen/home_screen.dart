@@ -1,41 +1,71 @@
+import 'dart:math';
+
 import 'package:flutter/material.dart';
 import 'package:random_number_generator/constant/color.dart';
 
-class HomeScreen extends StatelessWidget {
+class HomeScreen extends StatefulWidget {
   const HomeScreen({super.key});
 
   @override
+  State<HomeScreen> createState() => _HomeScreenState();
+}
+
+class _HomeScreenState extends State<HomeScreen> {
+  List<int> numbers = [123, 456, 789];
+
+  @override
   Widget build(BuildContext context) {
-    return const Scaffold(
+    return Scaffold(
       backgroundColor: primaryColor,
       body: SafeArea(
         child: Padding(
-          padding: EdgeInsets.symmetric(
+          padding: const EdgeInsets.symmetric(
             horizontal: 16,
           ),
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.stretch,
             children: [
-              _Header(),
-              _Body(),
-              _Footer(),
+              const _Header(),
+              _Body(
+                numbers: numbers,
+              ),
+              _Footer(
+                onPressed: onCreatePressed,
+              ),
             ],
           ),
         ),
       ),
     );
   }
+
+  void onCreatePressed() {
+    final rand = Random();
+    final Set<int> newNumbers = {};
+
+    while (newNumbers.length < 3) {
+      final randNumber = rand.nextInt(1000);
+
+      newNumbers.add(randNumber);
+    }
+
+    setState(() {
+      numbers = newNumbers.toList();
+    });
+  }
 }
 
 class _Footer extends StatelessWidget {
+  final VoidCallback onPressed;
   const _Footer({
     super.key,
+    required this.onPressed,
   });
 
   @override
   Widget build(BuildContext context) {
     return ElevatedButton(
-      onPressed: () {},
+      onPressed: onPressed,
       style: ElevatedButton.styleFrom(
         backgroundColor: redColor,
         foregroundColor: Colors.white,
@@ -48,19 +78,33 @@ class _Footer extends StatelessWidget {
 }
 
 class _Body extends StatelessWidget {
-  const _Body({
-    super.key,
-  });
+  final List<int> numbers;
+  const _Body({super.key, required this.numbers});
 
   @override
   Widget build(BuildContext context) {
-    return const Expanded(
-      child: Text(
-        '''
-              123
-              456
-              789
-              ''',
+    return Expanded(
+      child: Column(
+        mainAxisAlignment: MainAxisAlignment.center,
+        children: numbers
+            .map((e) => e.toString().split(''))
+            .map(
+              (e) => Padding(
+                padding: const EdgeInsets.symmetric(vertical: 8),
+                child: Row(
+                  children: e
+                      .map(
+                        (number) => Image.asset(
+                          'asset/img/$number.png',
+                          width: 50,
+                          height: 70,
+                        ),
+                      )
+                      .toList(),
+                ),
+              ),
+            )
+            .toList(),
       ),
     );
   }
