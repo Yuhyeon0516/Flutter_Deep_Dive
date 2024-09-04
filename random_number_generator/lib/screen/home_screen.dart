@@ -1,6 +1,7 @@
 import 'dart:math';
 
 import 'package:flutter/material.dart';
+import 'package:random_number_generator/component/number_to_image.dart';
 import 'package:random_number_generator/constant/color.dart';
 import 'package:random_number_generator/screen/setting_screen.dart';
 
@@ -42,7 +43,7 @@ class _HomeScreenState extends State<HomeScreen> {
     );
   }
 
-  void onCreatePressed() {
+  onCreatePressed() {
     final rand = Random();
     final Set<int> newNumbers = {};
 
@@ -57,7 +58,7 @@ class _HomeScreenState extends State<HomeScreen> {
     });
   }
 
-  void onSettingPressed() {
+  onSettingPressed() {
     Navigator.of(context).push(
       MaterialPageRoute(
         builder: (BuildContext context) {
@@ -99,25 +100,7 @@ class _Body extends StatelessWidget {
     return Expanded(
       child: Column(
         mainAxisAlignment: MainAxisAlignment.center,
-        children: numbers
-            .map((e) => e.toString().split(''))
-            .map(
-              (e) => Padding(
-                padding: const EdgeInsets.symmetric(vertical: 8),
-                child: Row(
-                  children: e
-                      .map(
-                        (number) => Image.asset(
-                          'asset/img/$number.png',
-                          width: 50,
-                          height: 70,
-                        ),
-                      )
-                      .toList(),
-                ),
-              ),
-            )
-            .toList(),
+        children: numbers.map((e) => NumberToImage(number: e)).toList(),
       ),
     );
   }
