@@ -17,6 +17,7 @@ class _HomeScreenState extends State<HomeScreen> {
     ),
     zoom: 15,
   );
+  late GoogleMapController controller;
 
   checkPermission() async {
     final isLocationEnabled = await Geolocator.isLocationServiceEnabled();
@@ -40,6 +41,25 @@ class _HomeScreenState extends State<HomeScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      appBar: AppBar(
+        centerTitle: true,
+        title: const Text(
+          "오늘도 출근",
+          style: TextStyle(
+            color: Colors.blue,
+            fontWeight: FontWeight.w700,
+          ),
+        ),
+        actions: [
+          IconButton(
+            onPressed: myLocationPressed,
+            icon: const Icon(
+              Icons.my_location,
+            ),
+            color: Colors.blue,
+          )
+        ],
+      ),
       body: FutureBuilder(
         future: checkPermission(),
         builder: (BuildContext context, AsyncSnapshot snapshot) {
@@ -53,6 +73,10 @@ class _HomeScreenState extends State<HomeScreen> {
               Expanded(
                 child: GoogleMap(
                   initialCameraPosition: initialPosition,
+                  myLocationEnabled: true,
+                  onMapCreated: (GoogleMapController controller) {
+                    this.controller = controller;
+                  },
                 ),
               )
             ],
@@ -60,5 +84,12 @@ class _HomeScreenState extends State<HomeScreen> {
         },
       ),
     );
+  }
+
+  myLocationPressed() async {
+    final location = await Geolocator.getCurrentPosition();
+
+    controller.animateCamera(
+        CameraUpdate.newLatLng(LatLng(location.latitude, location.longitude)));
   }
 }
