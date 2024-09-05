@@ -83,6 +83,16 @@ class _HomeScreenState extends State<HomeScreen> {
                       position: LatLng(37.5214, 126.9246),
                     )
                   },
+                  circles: {
+                    Circle(
+                      circleId: const CircleId("inDistance"),
+                      center: const LatLng(37.5214, 126.9246),
+                      fillColor: Colors.blue.withOpacity(0.6),
+                      radius: 100,
+                      strokeColor: Colors.blue,
+                      strokeWidth: 1,
+                    )
+                  },
                 ),
               )
             ],
