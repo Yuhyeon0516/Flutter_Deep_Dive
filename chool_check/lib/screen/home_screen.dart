@@ -18,13 +18,6 @@ class _HomeScreenState extends State<HomeScreen> {
     zoom: 15,
   );
 
-  @override
-  initState() {
-    super.initState();
-
-    checkPermission();
-  }
-
   checkPermission() async {
     final isLocationEnabled = await Geolocator.isLocationServiceEnabled();
 
@@ -47,14 +40,24 @@ class _HomeScreenState extends State<HomeScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: Column(
-        children: [
-          Expanded(
-            child: GoogleMap(
-              initialCameraPosition: initialPosition,
-            ),
-          )
-        ],
+      body: FutureBuilder(
+        future: checkPermission(),
+        builder: (BuildContext context, AsyncSnapshot snapshot) {
+          if (snapshot.hasError) {
+            return Center(
+              child: Text(snapshot.error.toString()),
+            );
+          }
+          return Column(
+            children: [
+              Expanded(
+                child: GoogleMap(
+                  initialCameraPosition: initialPosition,
+                ),
+              )
+            ],
+          );
+        },
       ),
     );
   }
