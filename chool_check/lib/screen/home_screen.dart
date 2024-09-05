@@ -77,6 +77,12 @@ class _HomeScreenState extends State<HomeScreen> {
                   onMapCreated: (GoogleMapController controller) {
                     this.controller = controller;
                   },
+                  markers: {
+                    const Marker(
+                      markerId: MarkerId("123"),
+                      position: LatLng(37.5214, 126.9246),
+                    )
+                  },
                 ),
               )
             ],
