@@ -33,11 +33,16 @@ class _CamScreenState extends State<CamScreen> {
 
       engine!.registerEventHandler(
         RtcEngineEventHandler(
+          onJoinChannelSuccess: (connection, elapsed) {},
+          onLeaveChannel: (connection, stats) {},
           onUserJoined: (connection, remoteUid, elapsed) {
             print('------ User Join ------');
             setState(() {
               this.remoteUid = remoteUid;
             });
+          },
+          onUserOffline: (connection, remoteUid, reason) {
+            this.remoteUid = null;
           },
         ),
       );
@@ -98,6 +103,9 @@ class _CamScreenState extends State<CamScreen> {
                   right: 16,
                   child: ElevatedButton(
                     onPressed: () {
+                      engine!.leaveChannel();
+                      engine!.release();
+
                       Navigator.of(context).pop();
                     },
                     child: Text("나가기"),
