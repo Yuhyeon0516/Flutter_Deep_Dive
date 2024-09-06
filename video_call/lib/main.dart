@@ -3,7 +3,10 @@ import 'package:video_call/screen/home_screen.dart';
 
 void main() {
   runApp(
-    const MaterialApp(
+    MaterialApp(
+      theme: ThemeData(
+        fontFamily: "NotoSans",
+      ),
       home: HomeScreen(),
     ),
   );
