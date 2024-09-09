@@ -1,4 +1,5 @@
 import 'package:calendar_schedular/component/calendar.dart';
+import 'package:calendar_schedular/component/schedule_card.dart';
 import 'package:calendar_schedular/component/today_banner.dart';
 import 'package:flutter/material.dart';
 
@@ -30,6 +31,25 @@ class _HomeScreenState extends State<HomeScreen> {
             TodayBanner(
               selectedDay: selectedDay,
               taskCount: 0,
+            ),
+            Expanded(
+              child: Padding(
+                padding: const EdgeInsets.only(
+                  left: 16,
+                  right: 16,
+                  top: 16,
+                ),
+                child: ListView(
+                  children: [
+                    ScheduleCard(
+                      startTime: DateTime(2024, 9, 9, 11),
+                      endTime: DateTime(2024, 9, 9, 12),
+                      content: "플러터 공부",
+                      color: Colors.blue,
+                    )
+                  ],
+                ),
+              ),
             )
           ],
         ),
