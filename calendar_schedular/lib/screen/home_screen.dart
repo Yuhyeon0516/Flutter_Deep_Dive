@@ -1,4 +1,6 @@
 import 'package:calendar_schedular/component/calendar.dart';
+import 'package:calendar_schedular/component/custom_text_field.dart';
+import 'package:calendar_schedular/component/schedule_bottom_sheet.dart';
 import 'package:calendar_schedular/component/schedule_card.dart';
 import 'package:calendar_schedular/component/today_banner.dart';
 import 'package:calendar_schedular/const/color.dart';
@@ -26,17 +28,7 @@ class _HomeScreenState extends State<HomeScreen> {
           showModalBottomSheet(
             context: context,
             builder: (BuildContext context) {
-              return Container(
-                decoration: const BoxDecoration(
-                  color: Colors.white,
-                  borderRadius: BorderRadius.only(
-                    topLeft: Radius.circular(16),
-                    topRight: Radius.circular(16),
-                  ),
-                ),
-                width: double.infinity,
-                child: const Column(),
-              );
+              return const ScheduleBottomSheet();
             },
           );
         },
