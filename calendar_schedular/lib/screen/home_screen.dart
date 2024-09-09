@@ -29,6 +29,7 @@ class _HomeScreenState extends State<HomeScreen> {
     return Scaffold(
       body: SafeArea(
         child: TableCalendar(
+          locale: 'ko_KR',
           focusedDay: DateTime.now(),
           firstDay: DateTime(1800),
           lastDay: DateTime(3000),
