@@ -2,8 +2,8 @@ import 'package:calendar_schedular/const/color.dart';
 import 'package:flutter/material.dart';
 
 class ScheduleCard extends StatelessWidget {
-  final DateTime startTime;
-  final DateTime endTime;
+  final int startTime;
+  final int endTime;
   final String content;
   final Color color;
 
@@ -36,7 +36,7 @@ class ScheduleCard extends StatelessWidget {
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   Text(
-                    "${startTime.hour.toString().padLeft(2, "0")}:${startTime.minute.toString().padLeft(2, "0")}",
+                    "${startTime.toString().padLeft(2, "0")}:00",
                     style: const TextStyle(
                       fontWeight: FontWeight.w600,
                       color: primaryColor,
@@ -44,7 +44,7 @@ class ScheduleCard extends StatelessWidget {
                     ),
                   ),
                   Text(
-                    "${endTime.hour.toString().padLeft(2, "0")}:${endTime.minute.toString().padLeft(2, "0")}",
+                    "${endTime.toString().padLeft(2, "0")}:00",
                     style: const TextStyle(
                       fontWeight: FontWeight.w600,
                       color: primaryColor,
