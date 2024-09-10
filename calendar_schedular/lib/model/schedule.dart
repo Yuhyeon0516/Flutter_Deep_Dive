@@ -1,19 +1,25 @@
-class Schedule {
-  final int id;
-  final int startTime;
-  final int endTime;
-  final String content;
-  final DateTime date;
-  final String color;
-  final DateTime createdAt;
+import 'package:drift/drift.dart';
 
-  Schedule({
-    required this.id,
-    required this.startTime,
-    required this.endTime,
-    required this.content,
-    required this.date,
-    required this.color,
-    required this.createdAt,
-  });
+class Schedule extends Table {
+  // final int id;
+  IntColumn get id => integer().autoIncrement()();
+
+  // final int startTime;
+  IntColumn get startTime => integer()();
+
+  // final int endTime;
+  IntColumn get endTime => integer()();
+
+  // final String content;
+  TextColumn get content => text()();
+
+  // final DateTime date;
+  DateTimeColumn get date => dateTime()();
+
+  // final String color;
+  TextColumn get color => text()();
+
+  // final DateTime createdAt;
+  DateTimeColumn get createdAt =>
+      dateTime().clientDefault(() => DateTime.now().toUtc())();
 }
