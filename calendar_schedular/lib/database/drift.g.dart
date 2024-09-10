@@ -28,7 +28,9 @@ class $CategoryTableTable extends CategoryTable
   @override
   late final GeneratedColumn<int> randomNum = GeneratedColumn<int>(
       'random_num', aliasedName, false,
-      type: DriftSqlType.int, requiredDuringInsert: true);
+      type: DriftSqlType.int,
+      requiredDuringInsert: false,
+      defaultValue: const Constant(0));
   static const VerificationMeta _createdAtMeta =
       const VerificationMeta('createdAt');
   @override
@@ -61,8 +63,6 @@ class $CategoryTableTable extends CategoryTable
     if (data.containsKey('random_num')) {
       context.handle(_randomNumMeta,
           randomNum.isAcceptableOrUnknown(data['random_num']!, _randomNumMeta));
-    } else if (isInserting) {
-      context.missing(_randomNumMeta);
     }
     if (data.containsKey('created_at')) {
       context.handle(_createdAtMeta,
@@ -199,10 +199,9 @@ class CategoryTableCompanion extends UpdateCompanion<CategoryTableData> {
   CategoryTableCompanion.insert({
     this.id = const Value.absent(),
     required String color,
-    required int randomNum,
+    this.randomNum = const Value.absent(),
     this.createdAt = const Value.absent(),
-  })  : color = Value(color),
-        randomNum = Value(randomNum);
+  }) : color = Value(color);
   static Insertable<CategoryTableData> custom({
     Expression<int>? id,
     Expression<String>? color,
@@ -653,7 +652,7 @@ typedef $$CategoryTableTableCreateCompanionBuilder = CategoryTableCompanion
     Function({
   Value<int> id,
   required String color,
-  required int randomNum,
+  Value<int> randomNum,
   Value<DateTime> createdAt,
 });
 typedef $$CategoryTableTableUpdateCompanionBuilder = CategoryTableCompanion
@@ -780,7 +779,7 @@ class $$CategoryTableTableTableManager extends RootTableManager<
           createCompanionCallback: ({
             Value<int> id = const Value.absent(),
             required String color,
-            required int randomNum,
+            Value<int> randomNum = const Value.absent(),
             Value<DateTime> createdAt = const Value.absent(),
           }) =>
               CategoryTableCompanion.insert(
