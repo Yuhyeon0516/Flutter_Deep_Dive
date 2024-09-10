@@ -62,7 +62,7 @@ class _HomeScreenState extends State<HomeScreen> {
                   top: 16,
                 ),
                 child: FutureBuilder<List<ScheduleTableData>>(
-                    future: GetIt.I<AppDatabase>().getSchedules(),
+                    future: GetIt.I<AppDatabase>().getSchedules(selectedDay),
                     builder: (context, snapshot) {
                       if (snapshot.hasError) {
                         return Center(
@@ -78,14 +78,11 @@ class _HomeScreenState extends State<HomeScreen> {
                       }
 
                       final schedules = snapshot.data!;
-                      final selectedSchedules = schedules
-                          .where((e) => e.date.isAtSameMomentAs(selectedDay))
-                          .toList();
 
                       return ListView.separated(
-                        itemCount: selectedSchedules.length,
+                        itemCount: schedules.length,
                         itemBuilder: (context, index) {
-                          final schedule = selectedSchedules[index];
+                          final schedule = schedules[index];
 
                           return ScheduleCard(
                             startTime: schedule.startTime,
