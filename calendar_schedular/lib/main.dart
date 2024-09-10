@@ -1,8 +1,7 @@
-import 'package:calendar_schedular/const/color.dart';
 import 'package:calendar_schedular/database/drift.dart';
 import 'package:calendar_schedular/screen/home_screen.dart';
-import 'package:drift/drift.dart';
 import 'package:flutter/material.dart';
+import 'package:get_it/get_it.dart';
 import 'package:intl/date_symbol_data_local.dart';
 
 void main() async {
@@ -13,9 +12,8 @@ void main() async {
   await initializeDateFormatting();
 
   final database = AppDatabase();
-  final res = await database.getSchedules();
 
-  print(res);
+  GetIt.I.registerSingleton<AppDatabase>(database);
 
   runApp(
     MaterialApp(
