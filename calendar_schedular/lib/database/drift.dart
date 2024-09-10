@@ -73,7 +73,18 @@ class AppDatabase extends _$AppDatabase {
       into(categoryTable).insert(data);
 
   @override
-  int get schemaVersion => 1;
+  int get schemaVersion => 2;
+
+  @override
+  MigrationStrategy get migration {
+    return MigrationStrategy(
+      onUpgrade: (m, from, to) async {
+        if (from < 2) {
+          await m.addColumn(categoryTable, categoryTable.randomNum);
+        }
+      },
+    );
+  }
 }
 
 LazyDatabase _openConnection() {

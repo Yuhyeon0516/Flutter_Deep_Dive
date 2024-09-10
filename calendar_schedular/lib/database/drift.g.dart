@@ -23,6 +23,12 @@ class $CategoryTableTable extends CategoryTable
   late final GeneratedColumn<String> color = GeneratedColumn<String>(
       'color', aliasedName, false,
       type: DriftSqlType.string, requiredDuringInsert: true);
+  static const VerificationMeta _randomNumMeta =
+      const VerificationMeta('randomNum');
+  @override
+  late final GeneratedColumn<int> randomNum = GeneratedColumn<int>(
+      'random_num', aliasedName, false,
+      type: DriftSqlType.int, requiredDuringInsert: true);
   static const VerificationMeta _createdAtMeta =
       const VerificationMeta('createdAt');
   @override
@@ -32,7 +38,7 @@ class $CategoryTableTable extends CategoryTable
       requiredDuringInsert: false,
       clientDefault: () => DateTime.now().toUtc());
   @override
-  List<GeneratedColumn> get $columns => [id, color, createdAt];
+  List<GeneratedColumn> get $columns => [id, color, randomNum, createdAt];
   @override
   String get aliasedName => _alias ?? actualTableName;
   @override
@@ -52,6 +58,12 @@ class $CategoryTableTable extends CategoryTable
     } else if (isInserting) {
       context.missing(_colorMeta);
     }
+    if (data.containsKey('random_num')) {
+      context.handle(_randomNumMeta,
+          randomNum.isAcceptableOrUnknown(data['random_num']!, _randomNumMeta));
+    } else if (isInserting) {
+      context.missing(_randomNumMeta);
+    }
     if (data.containsKey('created_at')) {
       context.handle(_createdAtMeta,
           createdAt.isAcceptableOrUnknown(data['created_at']!, _createdAtMeta));
@@ -69,6 +81,8 @@ class $CategoryTableTable extends CategoryTable
           .read(DriftSqlType.int, data['${effectivePrefix}id'])!,
       color: attachedDatabase.typeMapping
           .read(DriftSqlType.string, data['${effectivePrefix}color'])!,
+      randomNum: attachedDatabase.typeMapping
+          .read(DriftSqlType.int, data['${effectivePrefix}random_num'])!,
       createdAt: attachedDatabase.typeMapping
           .read(DriftSqlType.dateTime, data['${effectivePrefix}created_at'])!,
     );
@@ -84,14 +98,19 @@ class CategoryTableData extends DataClass
     implements Insertable<CategoryTableData> {
   final int id;
   final String color;
+  final int randomNum;
   final DateTime createdAt;
   const CategoryTableData(
-      {required this.id, required this.color, required this.createdAt});
+      {required this.id,
+      required this.color,
+      required this.randomNum,
+      required this.createdAt});
   @override
   Map<String, Expression> toColumns(bool nullToAbsent) {
     final map = <String, Expression>{};
     map['id'] = Variable<int>(id);
     map['color'] = Variable<String>(color);
+    map['random_num'] = Variable<int>(randomNum);
     map['created_at'] = Variable<DateTime>(createdAt);
     return map;
   }
@@ -100,6 +119,7 @@ class CategoryTableData extends DataClass
     return CategoryTableCompanion(
       id: Value(id),
       color: Value(color),
+      randomNum: Value(randomNum),
       createdAt: Value(createdAt),
     );
   }
@@ -110,6 +130,7 @@ class CategoryTableData extends DataClass
     return CategoryTableData(
       id: serializer.fromJson<int>(json['id']),
       color: serializer.fromJson<String>(json['color']),
+      randomNum: serializer.fromJson<int>(json['randomNum']),
       createdAt: serializer.fromJson<DateTime>(json['createdAt']),
     );
   }
@@ -119,20 +140,24 @@ class CategoryTableData extends DataClass
     return <String, dynamic>{
       'id': serializer.toJson<int>(id),
       'color': serializer.toJson<String>(color),
+      'randomNum': serializer.toJson<int>(randomNum),
       'createdAt': serializer.toJson<DateTime>(createdAt),
     };
   }
 
-  CategoryTableData copyWith({int? id, String? color, DateTime? createdAt}) =>
+  CategoryTableData copyWith(
+          {int? id, String? color, int? randomNum, DateTime? createdAt}) =>
       CategoryTableData(
         id: id ?? this.id,
         color: color ?? this.color,
+        randomNum: randomNum ?? this.randomNum,
         createdAt: createdAt ?? this.createdAt,
       );
   CategoryTableData copyWithCompanion(CategoryTableCompanion data) {
     return CategoryTableData(
       id: data.id.present ? data.id.value : this.id,
       color: data.color.present ? data.color.value : this.color,
+      randomNum: data.randomNum.present ? data.randomNum.value : this.randomNum,
       createdAt: data.createdAt.present ? data.createdAt.value : this.createdAt,
     );
   }
@@ -142,53 +167,65 @@ class CategoryTableData extends DataClass
     return (StringBuffer('CategoryTableData(')
           ..write('id: $id, ')
           ..write('color: $color, ')
+          ..write('randomNum: $randomNum, ')
           ..write('createdAt: $createdAt')
           ..write(')'))
         .toString();
   }
 
   @override
-  int get hashCode => Object.hash(id, color, createdAt);
+  int get hashCode => Object.hash(id, color, randomNum, createdAt);
   @override
   bool operator ==(Object other) =>
       identical(this, other) ||
       (other is CategoryTableData &&
           other.id == this.id &&
           other.color == this.color &&
+          other.randomNum == this.randomNum &&
           other.createdAt == this.createdAt);
 }
 
 class CategoryTableCompanion extends UpdateCompanion<CategoryTableData> {
   final Value<int> id;
   final Value<String> color;
+  final Value<int> randomNum;
   final Value<DateTime> createdAt;
   const CategoryTableCompanion({
     this.id = const Value.absent(),
     this.color = const Value.absent(),
+    this.randomNum = const Value.absent(),
     this.createdAt = const Value.absent(),
   });
   CategoryTableCompanion.insert({
     this.id = const Value.absent(),
     required String color,
+    required int randomNum,
     this.createdAt = const Value.absent(),
-  }) : color = Value(color);
+  })  : color = Value(color),
+        randomNum = Value(randomNum);
   static Insertable<CategoryTableData> custom({
     Expression<int>? id,
     Expression<String>? color,
+    Expression<int>? randomNum,
     Expression<DateTime>? createdAt,
   }) {
     return RawValuesInsertable({
       if (id != null) 'id': id,
       if (color != null) 'color': color,
+      if (randomNum != null) 'random_num': randomNum,
       if (createdAt != null) 'created_at': createdAt,
     });
   }
 
   CategoryTableCompanion copyWith(
-      {Value<int>? id, Value<String>? color, Value<DateTime>? createdAt}) {
+      {Value<int>? id,
+      Value<String>? color,
+      Value<int>? randomNum,
+      Value<DateTime>? createdAt}) {
     return CategoryTableCompanion(
       id: id ?? this.id,
       color: color ?? this.color,
+      randomNum: randomNum ?? this.randomNum,
       createdAt: createdAt ?? this.createdAt,
     );
   }
@@ -202,6 +239,9 @@ class CategoryTableCompanion extends UpdateCompanion<CategoryTableData> {
     if (color.present) {
       map['color'] = Variable<String>(color.value);
     }
+    if (randomNum.present) {
+      map['random_num'] = Variable<int>(randomNum.value);
+    }
     if (createdAt.present) {
       map['created_at'] = Variable<DateTime>(createdAt.value);
     }
@@ -213,6 +253,7 @@ class CategoryTableCompanion extends UpdateCompanion<CategoryTableData> {
     return (StringBuffer('CategoryTableCompanion(')
           ..write('id: $id, ')
           ..write('color: $color, ')
+          ..write('randomNum: $randomNum, ')
           ..write('createdAt: $createdAt')
           ..write(')'))
         .toString();
@@ -612,12 +653,14 @@ typedef $$CategoryTableTableCreateCompanionBuilder = CategoryTableCompanion
     Function({
   Value<int> id,
   required String color,
+  required int randomNum,
   Value<DateTime> createdAt,
 });
 typedef $$CategoryTableTableUpdateCompanionBuilder = CategoryTableCompanion
     Function({
   Value<int> id,
   Value<String> color,
+  Value<int> randomNum,
   Value<DateTime> createdAt,
 });
 
@@ -655,6 +698,11 @@ class $$CategoryTableTableFilterComposer
       builder: (column, joinBuilders) =>
           ColumnFilters(column, joinBuilders: joinBuilders));
 
+  ColumnFilters<int> get randomNum => $state.composableBuilder(
+      column: $state.table.randomNum,
+      builder: (column, joinBuilders) =>
+          ColumnFilters(column, joinBuilders: joinBuilders));
+
   ColumnFilters<DateTime> get createdAt => $state.composableBuilder(
       column: $state.table.createdAt,
       builder: (column, joinBuilders) =>
@@ -687,6 +735,11 @@ class $$CategoryTableTableOrderingComposer
       builder: (column, joinBuilders) =>
           ColumnOrderings(column, joinBuilders: joinBuilders));
 
+  ColumnOrderings<int> get randomNum => $state.composableBuilder(
+      column: $state.table.randomNum,
+      builder: (column, joinBuilders) =>
+          ColumnOrderings(column, joinBuilders: joinBuilders));
+
   ColumnOrderings<DateTime> get createdAt => $state.composableBuilder(
       column: $state.table.createdAt,
       builder: (column, joinBuilders) =>
@@ -715,21 +768,25 @@ class $$CategoryTableTableTableManager extends RootTableManager<
           updateCompanionCallback: ({
             Value<int> id = const Value.absent(),
             Value<String> color = const Value.absent(),
+            Value<int> randomNum = const Value.absent(),
             Value<DateTime> createdAt = const Value.absent(),
           }) =>
               CategoryTableCompanion(
             id: id,
             color: color,
+            randomNum: randomNum,
             createdAt: createdAt,
           ),
           createCompanionCallback: ({
             Value<int> id = const Value.absent(),
             required String color,
+            required int randomNum,
             Value<DateTime> createdAt = const Value.absent(),
           }) =>
               CategoryTableCompanion.insert(
             id: id,
             color: color,
+            randomNum: randomNum,
             createdAt: createdAt,
           ),
           withReferenceMapper: (p0) => p0
