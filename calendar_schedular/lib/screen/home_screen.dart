@@ -20,36 +20,36 @@ class _HomeScreenState extends State<HomeScreen> {
     DateTime.now().day,
   );
 
-  Map<DateTime, List<Schedule>> schedules = {
-    DateTime.utc(2024, 9, 9): [
-      Schedule(
-        id: 1,
-        startTime: 11,
-        endTime: 12,
-        content: "플러터 공부하기",
-        date: DateTime.utc(2024, 9, 9),
-        color: categoryColors.first,
-        createdAt: DateTime.now().toUtc(),
-      ),
-      Schedule(
-        id: 2,
-        startTime: 14,
-        endTime: 16,
-        content: "NestJS 공부하기",
-        date: DateTime.utc(2024, 9, 9),
-        color: categoryColors[3],
-        createdAt: DateTime.now().toUtc(),
-      ),
-      Schedule(
-        id: 3,
-        startTime: 16,
-        endTime: 18,
-        content: "운동하기",
-        date: DateTime.utc(2024, 9, 9),
-        color: categoryColors[5],
-        createdAt: DateTime.now().toUtc(),
-      ),
-    ]
+  Map<DateTime, List<ScheduleTable>> schedules = {
+    // DateTime.utc(2024, 9, 9): [
+    //   ScheduleTable(
+    //     id: 1,
+    //     startTime: 11,
+    //     endTime: 12,
+    //     content: "플러터 공부하기",
+    //     date: DateTime.utc(2024, 9, 9),
+    //     color: categoryColors.first,
+    //     createdAt: DateTime.now().toUtc(),
+    //   ),
+    //   ScheduleTable(
+    //     id: 2,
+    //     startTime: 14,
+    //     endTime: 16,
+    //     content: "NestJS 공부하기",
+    //     date: DateTime.utc(2024, 9, 9),
+    //     color: categoryColors[3],
+    //     createdAt: DateTime.now().toUtc(),
+    //   ),
+    //   ScheduleTable(
+    //     id: 3,
+    //     startTime: 16,
+    //     endTime: 18,
+    //     content: "운동하기",
+    //     date: DateTime.utc(2024, 9, 9),
+    //     color: categoryColors[5],
+    //     createdAt: DateTime.now().toUtc(),
+    //   ),
+    // ]
   };
 
   @override
@@ -57,7 +57,7 @@ class _HomeScreenState extends State<HomeScreen> {
     return Scaffold(
       floatingActionButton: FloatingActionButton(
         onPressed: () async {
-          final newSchedule = await showModalBottomSheet<Schedule>(
+          final newSchedule = await showModalBottomSheet<ScheduleTable>(
             context: context,
             builder: (BuildContext context) {
               return ScheduleBottomSheet(selectedDay: selectedDay);
@@ -66,16 +66,16 @@ class _HomeScreenState extends State<HomeScreen> {
 
           if (newSchedule == null) return;
 
-          setState(() {
-            schedules = {
-              ...schedules,
-              newSchedule.date: [
-                if (schedules.containsKey(newSchedule.date))
-                  ...schedules[newSchedule.date]!,
-                newSchedule,
-              ],
-            };
-          });
+          // setState(() {
+          //   schedules = {
+          //     ...schedules,
+          //     newSchedule.date: [
+          //       if (schedules.containsKey(newSchedule.date))
+          //         ...schedules[newSchedule.date]!,
+          //       newSchedule,
+          //     ],
+          //   };
+          // });
         },
         backgroundColor: primaryColor,
         child: const Icon(
@@ -107,14 +107,14 @@ class _HomeScreenState extends State<HomeScreen> {
                       ? schedules[selectedDay]!.length
                       : 0,
                   itemBuilder: (context, index) {
-                    final schedule = schedules[selectedDay]![index];
+                    // final schedule = schedules[selectedDay]![index];
                     return ScheduleCard(
-                      startTime: schedule.startTime,
-                      endTime: schedule.endTime,
-                      content: schedule.content,
+                      startTime: 12,
+                      endTime: 14,
+                      content: "test",
                       color: Color(
                         int.parse(
-                          'FF${schedule.color}',
+                          'FF000000',
                           radix: 16,
                         ),
                       ),
