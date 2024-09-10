@@ -84,14 +84,19 @@ class _HomeScreenState extends State<HomeScreen> {
                         itemBuilder: (context, index) {
                           final schedule = schedules[index];
 
-                          return ScheduleCard(
-                            startTime: schedule.startTime,
-                            endTime: schedule.endTime,
-                            content: schedule.content,
-                            color: Color(
-                              int.parse(
-                                'FF${schedule.color}',
-                                radix: 16,
+                          return Dismissible(
+                            key: ObjectKey(schedule.id),
+                            direction: DismissDirection.endToStart,
+                            onDismissed: (direction) {},
+                            child: ScheduleCard(
+                              startTime: schedule.startTime,
+                              endTime: schedule.endTime,
+                              content: schedule.content,
+                              color: Color(
+                                int.parse(
+                                  'FF${schedule.color}',
+                                  radix: 16,
+                                ),
                               ),
                             ),
                           );
