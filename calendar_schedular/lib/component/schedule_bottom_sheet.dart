@@ -1,7 +1,6 @@
 import 'package:calendar_schedular/component/custom_text_field.dart';
 import 'package:calendar_schedular/const/color.dart';
 import 'package:calendar_schedular/database/drift.dart';
-import 'package:calendar_schedular/model/schedule.dart';
 import 'package:drift/drift.dart' hide Column;
 import 'package:flutter/material.dart';
 import 'package:get_it/get_it.dart';

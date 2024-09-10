@@ -3,8 +3,10 @@ import 'package:calendar_schedular/component/schedule_bottom_sheet.dart';
 import 'package:calendar_schedular/component/schedule_card.dart';
 import 'package:calendar_schedular/component/today_banner.dart';
 import 'package:calendar_schedular/const/color.dart';
+import 'package:calendar_schedular/database/drift.dart';
 import 'package:calendar_schedular/model/schedule.dart';
 import 'package:flutter/material.dart';
+import 'package:get_it/get_it.dart';
 
 class HomeScreen extends StatefulWidget {
   const HomeScreen({super.key});
@@ -20,62 +22,19 @@ class _HomeScreenState extends State<HomeScreen> {
     DateTime.now().day,
   );
 
-  Map<DateTime, List<ScheduleTable>> schedules = {
-    // DateTime.utc(2024, 9, 9): [
-    //   ScheduleTable(
-    //     id: 1,
-    //     startTime: 11,
-    //     endTime: 12,
-    //     content: "플러터 공부하기",
-    //     date: DateTime.utc(2024, 9, 9),
-    //     color: categoryColors.first,
-    //     createdAt: DateTime.now().toUtc(),
-    //   ),
-    //   ScheduleTable(
-    //     id: 2,
-    //     startTime: 14,
-    //     endTime: 16,
-    //     content: "NestJS 공부하기",
-    //     date: DateTime.utc(2024, 9, 9),
-    //     color: categoryColors[3],
-    //     createdAt: DateTime.now().toUtc(),
-    //   ),
-    //   ScheduleTable(
-    //     id: 3,
-    //     startTime: 16,
-    //     endTime: 18,
-    //     content: "운동하기",
-    //     date: DateTime.utc(2024, 9, 9),
-    //     color: categoryColors[5],
-    //     createdAt: DateTime.now().toUtc(),
-    //   ),
-    // ]
-  };
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       floatingActionButton: FloatingActionButton(
         onPressed: () async {
-          final newSchedule = await showModalBottomSheet<ScheduleTable>(
+          await showModalBottomSheet<ScheduleTable>(
             context: context,
             builder: (BuildContext context) {
               return ScheduleBottomSheet(selectedDay: selectedDay);
             },
           );
 
-          if (newSchedule == null) return;
-
-          // setState(() {
-          //   schedules = {
-          //     ...schedules,
-          //     newSchedule.date: [
-          //       if (schedules.containsKey(newSchedule.date))
-          //         ...schedules[newSchedule.date]!,
-          //       newSchedule,
-          //     ],
-          //   };
-          // });
+          setState(() {});
         },
         backgroundColor: primaryColor,
         child: const Icon(
@@ -102,30 +61,51 @@ class _HomeScreenState extends State<HomeScreen> {
                   right: 16,
                   top: 16,
                 ),
-                child: ListView.separated(
-                  itemCount: schedules.containsKey(selectedDay)
-                      ? schedules[selectedDay]!.length
-                      : 0,
-                  itemBuilder: (context, index) {
-                    // final schedule = schedules[selectedDay]![index];
-                    return ScheduleCard(
-                      startTime: 12,
-                      endTime: 14,
-                      content: "test",
-                      color: Color(
-                        int.parse(
-                          'FF000000',
-                          radix: 16,
-                        ),
-                      ),
-                    );
-                  },
-                  separatorBuilder: (context, index) {
-                    return const SizedBox(
-                      height: 8,
-                    );
-                  },
-                ),
+                child: FutureBuilder<List<ScheduleTableData>>(
+                    future: GetIt.I<AppDatabase>().getSchedules(),
+                    builder: (context, snapshot) {
+                      if (snapshot.hasError) {
+                        return Center(
+                          child: Text(snapshot.error.toString()),
+                        );
+                      }
+
+                      if (!snapshot.hasData &&
+                          snapshot.connectionState == ConnectionState.waiting) {
+                        return const Center(
+                          child: CircularProgressIndicator(),
+                        );
+                      }
+
+                      final schedules = snapshot.data!;
+                      final selectedSchedules = schedules
+                          .where((e) => e.date.isAtSameMomentAs(selectedDay))
+                          .toList();
+
+                      return ListView.separated(
+                        itemCount: selectedSchedules.length,
+                        itemBuilder: (context, index) {
+                          final schedule = selectedSchedules[index];
+
+                          return ScheduleCard(
+                            startTime: schedule.startTime,
+                            endTime: schedule.endTime,
+                            content: schedule.content,
+                            color: Color(
+                              int.parse(
+                                'FF${schedule.color}',
+                                radix: 16,
+                              ),
+                            ),
+                          );
+                        },
+                        separatorBuilder: (context, index) {
+                          return const SizedBox(
+                            height: 8,
+                          );
+                        },
+                      );
+                    }),
               ),
             )
           ],
