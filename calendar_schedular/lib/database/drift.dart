@@ -1,4 +1,5 @@
 import 'dart:io';
+import 'package:calendar_schedular/model/category.dart';
 import 'package:calendar_schedular/model/schedule.dart';
 import 'package:drift/drift.dart';
 import 'package:drift/native.dart';
@@ -12,6 +13,7 @@ part 'drift.g.dart';
 @DriftDatabase(
   tables: [
     ScheduleTable,
+    CategoryTable,
   ],
 )
 class AppDatabase extends _$AppDatabase {
