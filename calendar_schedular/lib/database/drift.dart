@@ -1,6 +1,7 @@
 import 'dart:io';
 import 'package:calendar_schedular/model/category.dart';
 import 'package:calendar_schedular/model/schedule.dart';
+import 'package:calendar_schedular/model/schedule_with_category.dart';
 import 'package:drift/drift.dart';
 import 'package:drift/native.dart';
 import 'package:path_provider/path_provider.dart';
@@ -22,18 +23,20 @@ class AppDatabase extends _$AppDatabase {
   Future<List<ScheduleTableData>> getSchedules(DateTime date) =>
       (select(scheduleTable)..where((table) => table.date.equals(date))).get();
 
-  Stream<List<ScheduleTableData>> streamSchedules(DateTime date) =>
-      (select(scheduleTable)
-            ..where((table) => table.date.equals(date))
-            ..orderBy(
-              [
-                (table) => OrderingTerm(
-                    expression: table.startTime, mode: OrderingMode.asc),
-                (table) => OrderingTerm(
-                    expression: table.endTime, mode: OrderingMode.asc),
-              ],
-            ))
-          .watch();
+  Stream<List<ScheduleWithCategory>> streamSchedules(DateTime date) {
+    final query = select(scheduleTable).join([
+      innerJoin(
+          categoryTable, categoryTable.id.equalsExp(scheduleTable.colorId))
+    ])
+      ..where(scheduleTable.date.equals(date));
+
+    return query.map((row) {
+      final schedule = row.readTable(scheduleTable);
+      final category = row.readTable(categoryTable);
+
+      return ScheduleWithCategory(category: category, schedule: schedule);
+    }).watch();
+  }
 
   Future<int> createSchedule(ScheduleTableCompanion data) =>
       into(scheduleTable).insert(data);
@@ -45,9 +48,29 @@ class AppDatabase extends _$AppDatabase {
       (update(scheduleTable)..where((table) => table.id.equals(id)))
           .write(data);
 
-  Future<ScheduleTableData> getScheduleById(int id) =>
-      (select(scheduleTable)..where((table) => table.id.equals(id)))
-          .getSingle();
+  Future<ScheduleWithCategory> getScheduleById(int id) {
+    // (select(scheduleTable)..where((table) => table.id.equals(id)))
+    //       .getSingle();
+
+    final query = select(scheduleTable).join([
+      innerJoin(
+          categoryTable, categoryTable.id.equalsExp(scheduleTable.colorId))
+    ])
+      ..where(scheduleTable.id.equals(id));
+
+    return query.map((row) {
+      final schedule = row.readTable(scheduleTable);
+      final category = row.readTable(categoryTable);
+
+      return ScheduleWithCategory(category: category, schedule: schedule);
+    }).getSingle();
+  }
+
+  Future<List<CategoryTableData>> getCategories() =>
+      select(categoryTable).get();
+
+  Future<int> createCategory(CategoryTableCompanion data) =>
+      into(categoryTable).insert(data);
 
   @override
   int get schemaVersion => 1;
