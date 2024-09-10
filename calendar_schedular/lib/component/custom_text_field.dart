@@ -6,6 +6,7 @@ class CustomTextField extends StatelessWidget {
   final bool expand;
   final FormFieldSetter<String> onSaved;
   final FormFieldValidator<String> validator;
+  final String? initialValue;
 
   const CustomTextField({
     super.key,
@@ -13,6 +14,7 @@ class CustomTextField extends StatelessWidget {
     this.expand = false,
     required this.onSaved,
     required this.validator,
+    this.initialValue,
   });
 
   @override
@@ -49,6 +51,7 @@ class CustomTextField extends StatelessWidget {
       cursorColor: Colors.grey,
       onSaved: onSaved,
       validator: validator,
+      initialValue: initialValue,
     );
   }
 }
