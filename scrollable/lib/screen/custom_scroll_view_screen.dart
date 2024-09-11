@@ -8,14 +8,41 @@ class CustomScrollViewScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      backgroundColor: Colors.black,
       body: CustomScrollView(
         slivers: [
-          const SliverAppBar(
-            title: Text("CustomScrollViewScreen"),
-          ),
-          renderSliverGridBuilder()
+          renderSliverAppBar(),
+          renderSliverList(),
         ],
       ),
+    );
+  }
+
+  SliverAppBar renderSliverAppBar() {
+    return SliverAppBar(
+      // 위로 살짝 스크롤하면 AppBar가 보이는 형태
+      floating: true, // 기본값 false
+      // 스크롤해도 위에 AppBar가 고정되는 형태
+      pinned: false, // 기본값 false
+      // snap 하는 방향으로 AppBar가 사라지거나 나타남
+      // floating이 true여야 동작함
+      snap: true,
+      // AppBar가 List를 따라감
+      // pysics가 Bounce일때 사용 가능
+      stretch: true, // 기본값 false
+      // AppBar의 최대 Height
+      expandedHeight: 200,
+      // AppBar의 최소 Height
+      collapsedHeight: 150,
+      // AppBar가 늘어나 있을때의 디자인
+      flexibleSpace: FlexibleSpaceBar(
+        background: Image.asset(
+          "asset/img/image_1.jpeg",
+          fit: BoxFit.cover,
+        ),
+        title: const Text("FlexibleSpaceBar"),
+      ),
+      title: const Text("CustomScrollViewScreen"),
     );
   }
 
@@ -71,7 +98,7 @@ class CustomScrollViewScreen extends StatelessWidget {
     );
   }
 
-  SliverList renderSliverChildList() {
+  SliverList renderSliverList() {
     return SliverList(
       // 일반적인 ListView의 children에 넣어 그려지듯
       delegate: SliverChildListDelegate(
