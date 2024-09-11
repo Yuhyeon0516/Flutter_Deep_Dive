@@ -16,6 +16,7 @@ class CategoryStat extends StatelessWidget {
           horizontal: 8,
         ),
         child: Card(
+          color: lightColor,
           shape: RoundedRectangleBorder(
             borderRadius: BorderRadius.circular(
               16,
@@ -39,6 +40,10 @@ class CategoryStat extends StatelessWidget {
                       child: Text(
                         "종류별 통계",
                         textAlign: TextAlign.center,
+                        style: TextStyle(
+                          fontWeight: FontWeight.w700,
+                          color: Colors.white,
+                        ),
                       ),
                     ),
                   ),
@@ -49,7 +54,6 @@ class CategoryStat extends StatelessWidget {
                           bottomLeft: Radius.circular(16),
                           bottomRight: Radius.circular(16),
                         ),
-                        color: lightColor,
                       ),
                       child: ListView(
                         physics: const PageScrollPhysics(),
