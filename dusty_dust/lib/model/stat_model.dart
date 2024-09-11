@@ -1,5 +1,5 @@
 enum Region {
-  deagu,
+  daegu,
   chungnam,
   incheon,
   daejeon,
@@ -19,7 +19,7 @@ enum Region {
 
   String get krName {
     switch (this) {
-      case Region.deagu:
+      case Region.daegu:
         return '대구';
       case Region.chungnam:
         return '충남';
@@ -88,13 +88,13 @@ enum ItemCode {
 class StatModel {
   final Region region;
   final double stat;
-  final DateTime dateTime;
+  final DateTime dataTime;
   final ItemCode itemCode;
 
   StatModel({
     required this.region,
     required this.stat,
-    required this.dateTime,
+    required this.dataTime,
     required this.itemCode,
   });
 }
