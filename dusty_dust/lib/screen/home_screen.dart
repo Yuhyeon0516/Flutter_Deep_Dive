@@ -1,3 +1,4 @@
+import 'package:dusty_dust/component/category_stat.dart';
 import 'package:dusty_dust/component/main_stat.dart';
 import 'package:dusty_dust/const/colors.dart';
 import 'package:flutter/material.dart';
@@ -11,9 +12,7 @@ class HomeScreen extends StatelessWidget {
       backgroundColor: primaryColor,
       body: SingleChildScrollView(
         child: Column(
-          children: [
-            MainStat(),
-          ],
+          children: [MainStat(), CategoryStat()],
         ),
       ),
     );
