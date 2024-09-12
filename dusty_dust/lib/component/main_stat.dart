@@ -1,7 +1,17 @@
-import 'package:flutter/material.dart';
+import 'package:dusty_dust/model/stat_model.dart';
+import 'package:dusty_dust/utils/date_utils.dart';
+import 'package:dusty_dust/utils/status_utils.dart';
+import 'package:flutter/material.dart' hide DateUtils;
+import 'package:get_it/get_it.dart';
+import 'package:isar/isar.dart';
 
 class MainStat extends StatelessWidget {
-  const MainStat({super.key});
+  final Region region;
+
+  const MainStat({
+    super.key,
+    required this.region,
+  });
 
   @override
   Widget build(BuildContext context) {
@@ -11,41 +21,68 @@ class MainStat extends StatelessWidget {
     return SafeArea(
       child: SizedBox(
         width: double.infinity,
-        child: Column(
-          children: [
-            const Text(
-              "서울",
-              style: ts,
-            ),
-            Text(
-              "2024-09-11 21:00",
-              style: ts.copyWith(
-                fontSize: 20,
-                fontWeight: FontWeight.normal,
-              ),
-            ),
-            const SizedBox(
-              height: 20,
-            ),
-            Image.asset(
-              "asset/img/good.png",
-              width: MediaQuery.of(context).size.width / 2,
-            ),
-            const SizedBox(
-              height: 20,
-            ),
-            const Text(
-              "보통",
-              style: ts,
-            ),
-            Text(
-              "나쁘지 않네요.",
-              style: ts.copyWith(
-                fontSize: 20,
-              ),
-            ),
-          ],
-        ),
+        child: FutureBuilder<StatModel?>(
+            future: GetIt.I<Isar>()
+                .statModels
+                .filter()
+                .regionEqualTo(region)
+                .itemCodeEqualTo(ItemCode.PM10)
+                .sortByDataTimeDesc()
+                .findFirst(),
+            builder: (context, snapshot) {
+              if (!snapshot.hasData) {
+                if (snapshot.connectionState == ConnectionState.waiting) {
+                  return const Center(
+                    child: CircularProgressIndicator(),
+                  );
+                }
+                return const Center(
+                  child: Text('데이터가 없습니다.'),
+                );
+              }
+
+              final statModel = snapshot.data!;
+
+              final status = StatusUtils.getStatusModelFromStat(
+                statModel: statModel,
+              );
+
+              return Column(
+                children: [
+                  const Text(
+                    '서울',
+                    style: ts,
+                  ),
+                  Text(
+                    DateUtils.dateTimeToString(dateTime: statModel.dataTime),
+                    style: ts.copyWith(
+                      fontSize: 20,
+                      fontWeight: FontWeight.normal,
+                    ),
+                  ),
+                  const SizedBox(
+                    height: 20,
+                  ),
+                  Image.asset(
+                    status.imagePath,
+                    width: MediaQuery.of(context).size.width / 2,
+                  ),
+                  const SizedBox(
+                    height: 20,
+                  ),
+                  Text(
+                    status.label,
+                    style: ts,
+                  ),
+                  Text(
+                    status.comment,
+                    style: ts.copyWith(
+                      fontSize: 20,
+                    ),
+                  ),
+                ],
+              );
+            }),
       ),
     );
   }

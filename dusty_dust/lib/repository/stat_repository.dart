@@ -15,14 +15,11 @@ class StatRepository {
         .dataTimeEqualTo(compareDateTimeTarget)
         .count();
 
-    print(count);
-
     if (count > 0) {
       print('데이터가 존재합니다. $count');
       return;
     }
 
-    // TODO: 추후에 주석 해제 API Call Count 관련
     // for (ItemCode itemCode in ItemCode.values) {
     //   await fetchDataByItemCode(itemCode: itemCode);
     // }
