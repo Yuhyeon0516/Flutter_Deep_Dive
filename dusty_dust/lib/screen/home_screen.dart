@@ -17,12 +17,25 @@ class HomeScreen extends StatefulWidget {
 
 class _HomeScreenState extends State<HomeScreen> {
   Region region = Region.seoul;
+  bool isExpanded = true;
+  ScrollController scrollController = ScrollController();
 
   @override
   void initState() {
     super.initState();
 
     StatRepository.fetchData();
+
+    scrollController.addListener(() {
+      // appBar의 최대 높이인 500 - 기본 appbarheight의 값보다 offset이 작으면 접힌것
+      bool isExpanded = scrollController.offset < (500 - kToolbarHeight);
+
+      if (isExpanded != this.isExpanded) {
+        setState(() {
+          this.isExpanded = isExpanded;
+        });
+      }
+    });
   }
 
   @override
@@ -83,19 +96,17 @@ class _HomeScreenState extends State<HomeScreen> {
               ],
             ),
           ),
-          appBar: AppBar(
-            backgroundColor: statusModel.primaryColor,
-            surfaceTintColor: statusModel.primaryColor,
-          ),
-          body: SingleChildScrollView(
-            child: FutureBuilder(
-              future: StatRepository.fetchData(),
-              builder: (context, snapshot) {
-                return Column(
+          body: CustomScrollView(
+            controller: scrollController,
+            slivers: [
+              MainStat(
+                region: region,
+                primaryColor: statusModel.primaryColor,
+                isExpanded: isExpanded,
+              ),
+              SliverToBoxAdapter(
+                child: Column(
                   children: [
-                    MainStat(
-                      region: region,
-                    ),
                     CategoryStat(
                       region: region,
                       darkColor: statusModel.darkColor,
@@ -107,9 +118,9 @@ class _HomeScreenState extends State<HomeScreen> {
                       lightColor: statusModel.lightColor,
                     ),
                   ],
-                );
-              },
-            ),
+                ),
+              ),
+            ],
           ),
         );
       },
