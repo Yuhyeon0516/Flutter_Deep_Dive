@@ -49,8 +49,8 @@ class MainStat extends StatelessWidget {
 
               return Column(
                 children: [
-                  const Text(
-                    '서울',
+                  Text(
+                    region.krName,
                     style: ts,
                   ),
                   Text(
