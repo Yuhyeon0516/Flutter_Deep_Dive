@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:tabbar/screen/basic_tabbar_screen.dart';
+import 'package:tabbar/screen/tabbar_using_controller_screen.dart';
 
 class HomeScreen extends StatelessWidget {
   const HomeScreen({super.key});
@@ -25,6 +26,16 @@ class HomeScreen extends StatelessWidget {
                 );
               },
               child: const Text("Basic Tabbar Screen"),
+            ),
+            ElevatedButton(
+              onPressed: () {
+                Navigator.of(context).push(
+                  MaterialPageRoute(
+                    builder: (_) => const TabbarUsingControllerScreen(),
+                  ),
+                );
+              },
+              child: const Text("Tabbar Using Controller Screen"),
             ),
           ],
         ),
