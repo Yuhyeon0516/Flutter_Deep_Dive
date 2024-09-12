@@ -1,9 +1,36 @@
 import 'package:dio/dio.dart';
 import 'package:dusty_dust/model/stat_model.dart';
+import 'package:get_it/get_it.dart';
+import 'package:isar/isar.dart';
 
 class StatRepository {
-  static Future<List<StatModel>> fetchData({required ItemCode itemCode}) async {
-    final itemCodeStr = itemCode == ItemCode.PM25 ? 'PM2.5' : itemCode.name;
+  static Future<void> fetchData() async {
+    final isar = GetIt.I<Isar>();
+    final now = DateTime.now();
+    final compareDateTimeTarget =
+        DateTime(now.year, now.month, now.day, now.hour);
+
+    final count = await isar.statModels
+        .filter()
+        .dataTimeEqualTo(compareDateTimeTarget)
+        .count();
+
+    print(count);
+
+    if (count > 0) {
+      print('데이터가 존재합니다. $count');
+      return;
+    }
+
+    // TODO: 추후에 주석 해제 API Call Count 관련
+    // for (ItemCode itemCode in ItemCode.values) {
+    //   await fetchDataByItemCode(itemCode: itemCode);
+    // }
+  }
+
+  static Future<List<StatModel>> fetchDataByItemCode(
+      {required ItemCode itemCode}) async {
+    final itemCodeStr = itemCode.name;
 
     final res = await Dio().get(
       'http://apis.data.go.kr/B552584/ArpltnStatsSvc/getCtprvnMesureLIst',
@@ -25,7 +52,7 @@ class StatRepository {
     final List<String> skipKeys = ['dataGubun', 'dataTime', 'itemCode'];
 
     for (Map<String, dynamic> item in rawItemsList) {
-      final dataTime = item['dataTime'];
+      final dataTime = DateTime.parse(item['dataTime']);
 
       for (String key in item.keys) {
         if (skipKeys.contains(key)) {
@@ -33,17 +60,32 @@ class StatRepository {
         }
 
         final regionStr = key;
-        final stat = item[key];
+        final stat = double.parse(item[key]);
+        final region = Region.values.firstWhere((e) => e.name == regionStr);
 
-        stats = [
-          ...stats,
-          StatModel(
-            region: Region.values.firstWhere((e) => e.name == regionStr),
-            stat: double.parse(stat),
-            dataTime: DateTime.parse(dataTime),
-            itemCode: itemCode,
-          ),
-        ];
+        final statModel = StatModel()
+          ..region = region
+          ..stat = stat
+          ..dataTime = dataTime
+          ..itemCode = itemCode;
+
+        final isar = GetIt.I<Isar>();
+
+        final count = await isar.statModels
+            .filter()
+            .regionEqualTo(region)
+            .statEqualTo(stat)
+            .dataTimeEqualTo(dataTime)
+            .itemCodeEqualTo(itemCode)
+            .count();
+
+        if (count > 0) {
+          continue;
+        }
+
+        await isar.writeTxn(() async {
+          await isar.statModels.put(statModel);
+        });
       }
     }
 

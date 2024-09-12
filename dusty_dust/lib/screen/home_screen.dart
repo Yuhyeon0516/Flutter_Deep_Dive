@@ -5,20 +5,38 @@ import 'package:dusty_dust/const/colors.dart';
 import 'package:dusty_dust/model/stat_model.dart';
 import 'package:dusty_dust/repository/stat_repository.dart';
 import 'package:flutter/material.dart';
+import 'package:get_it/get_it.dart';
+import 'package:isar/isar.dart';
 
-class HomeScreen extends StatelessWidget {
+class HomeScreen extends StatefulWidget {
   const HomeScreen({super.key});
+
+  @override
+  State<HomeScreen> createState() => _HomeScreenState();
+}
+
+class _HomeScreenState extends State<HomeScreen> {
+  @override
+  void initState() {
+    super.initState();
+
+    getIsar();
+
+    StatRepository.fetchData();
+  }
+
+  getIsar() async {
+    print(await GetIt.I<Isar>().statModels.count());
+  }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: primaryColor,
       body: SingleChildScrollView(
-        child: FutureBuilder<List<StatModel>>(
-          future: StatRepository.fetchData(itemCode: ItemCode.PM10),
+        child: FutureBuilder(
+          future: StatRepository.fetchData(),
           builder: (context, snapshot) {
-            print(snapshot.data);
-
             return const Column(
               children: [
                 MainStat(),
