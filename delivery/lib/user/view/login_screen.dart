@@ -3,6 +3,7 @@ import 'dart:io';
 
 import 'package:delivery/common/component/custom_text_form_field.dart';
 import 'package:delivery/common/const/colors.dart';
+import 'package:delivery/common/const/data.dart';
 import 'package:delivery/common/layout/default_layout.dart';
 import 'package:delivery/common/view/root_tab.dart';
 import 'package:dio/dio.dart';
@@ -89,6 +90,18 @@ class _LoginScreenState extends State<LoginScreen> {
                           'authorization': 'Basic $token',
                         },
                       ),
+                    );
+
+                    final refreshToken = res.data['refreshToken'];
+                    final accessToken = res.data['accessToken'];
+
+                    await storage.write(
+                      key: REFRESH_TOKEN_KEY,
+                      value: refreshToken,
+                    );
+                    await storage.write(
+                      key: ACCESS_TOKEN_KEY,
+                      value: accessToken,
                     );
 
                     Navigator.of(context).push(
