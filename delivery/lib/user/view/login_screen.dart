@@ -1,13 +1,34 @@
+import 'dart:convert';
+import 'dart:io';
+
 import 'package:delivery/common/component/custom_text_form_field.dart';
 import 'package:delivery/common/const/colors.dart';
 import 'package:delivery/common/layout/default_layout.dart';
+import 'package:delivery/common/view/root_tab.dart';
+import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
 
-class LoginScreen extends StatelessWidget {
+class LoginScreen extends StatefulWidget {
   const LoginScreen({super.key});
 
   @override
+  State<LoginScreen> createState() => _LoginScreenState();
+}
+
+class _LoginScreenState extends State<LoginScreen> {
+  String username = '';
+  String password = '';
+
+  @override
   Widget build(BuildContext context) {
+    final dio = Dio();
+    // Android Emulator의 localhost
+    const emulatorIp = '10.0.2.2';
+    // iOS Simulator의 localhost
+    const simulatorIp = '127.0.0.1';
+
+    final ip = Platform.isIOS ? simulatorIp : emulatorIp;
+
     return DefaultLayout(
       child: SingleChildScrollView(
         keyboardDismissBehavior: ScrollViewKeyboardDismissBehavior.onDrag,
@@ -35,7 +56,9 @@ class LoginScreen extends StatelessWidget {
                 ),
                 CustomTextFormField(
                   hintText: '이메일을 입력해주세요.',
-                  onChanged: (value) {},
+                  onChanged: (String value) {
+                    username = value;
+                  },
                 ),
                 const SizedBox(
                   height: 16,
@@ -43,13 +66,37 @@ class LoginScreen extends StatelessWidget {
                 CustomTextFormField(
                   hintText: '비밀번호를 입력해주세요.',
                   obscureText: true,
-                  onChanged: (value) {},
+                  onChanged: (String value) {
+                    password = value;
+                  },
                 ),
                 const SizedBox(
                   height: 16,
                 ),
                 ElevatedButton(
-                  onPressed: () {},
+                  onPressed: () async {
+                    // id:pw
+                    final rawString = '$username:$password';
+
+                    Codec<String, String> stringToBase64 = utf8.fuse(base64);
+
+                    String token = stringToBase64.encode(rawString);
+
+                    final res = await dio.post(
+                      'http://$ip:3000/auth/login',
+                      options: Options(
+                        headers: {
+                          'authorization': 'Basic $token',
+                        },
+                      ),
+                    );
+
+                    Navigator.of(context).push(
+                      MaterialPageRoute(
+                        builder: (_) => const RootTab(),
+                      ),
+                    );
+                  },
                   style: ElevatedButton.styleFrom(
                     backgroundColor: PRIMARY_COLOR,
                     foregroundColor: Colors.white,
@@ -57,7 +104,20 @@ class LoginScreen extends StatelessWidget {
                   child: const Text('로그인'),
                 ),
                 TextButton(
-                  onPressed: () {},
+                  onPressed: () async {
+                    // const refreshToken =
+                    //     'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6InRlc3RAY29kZWZhY3RvcnkuYWkiLCJzdWIiOiJmNTViMzJkMi00ZDY4LTRjMWUtYTNjYS1kYTlkN2QwZDkyZTUiLCJ0eXBlIjoicmVmcmVzaCIsImlhdCI6MTcyNjQ3MDc2MiwiZXhwIjoxNzI2NTU3MTYyfQ.HwAd9bY2cdCjSxdSqqTZ5e13QYpiCGGhYCqBgdrY2WI';
+                    // final res = await dio.post(
+                    //   'http://$ip:3000/auth/token',
+                    //   options: Options(
+                    //     headers: {
+                    //       'authorization': 'Bearer $refreshToken',
+                    //     },
+                    //   ),
+                    // );
+
+                    // print(res.data);
+                  },
                   style: TextButton.styleFrom(
                     foregroundColor: Colors.black,
                   ),
