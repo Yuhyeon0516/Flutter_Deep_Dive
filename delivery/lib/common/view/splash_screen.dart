@@ -41,6 +41,9 @@ class _SplashScreenState extends State<SplashScreen> {
         ),
       );
 
+      await storage.write(
+          key: ACCESS_TOKEN_KEY, value: res.data['accessToken']);
+
       if (!mounted) return;
 
       Navigator.of(context).pushAndRemoveUntil(

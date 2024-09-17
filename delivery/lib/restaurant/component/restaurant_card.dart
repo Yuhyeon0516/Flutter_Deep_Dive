@@ -5,83 +5,86 @@ class RestaurantCard extends StatelessWidget {
   final Widget image;
   final String name;
   final List<String> tags;
-  final int ratingCount;
+  final int ratingsCount;
   final int deliveryTime;
   final int deliveryFee;
-  final double rating;
+  final double ratings;
 
   const RestaurantCard({
     super.key,
     required this.image,
     required this.name,
     required this.tags,
-    required this.ratingCount,
+    required this.ratingsCount,
     required this.deliveryTime,
     required this.deliveryFee,
-    required this.rating,
+    required this.ratings,
   });
 
   @override
   Widget build(BuildContext context) {
-    return Column(
-      children: [
-        ClipRRect(
-          borderRadius: BorderRadius.circular(12),
-          child: image,
-        ),
-        const SizedBox(
-          height: 16,
-        ),
-        Column(
-          crossAxisAlignment: CrossAxisAlignment.stretch,
-          children: [
-            Text(
-              name,
-              style: const TextStyle(
-                fontSize: 20,
-                fontWeight: FontWeight.w500,
+    return Padding(
+      padding: const EdgeInsets.symmetric(horizontal: 12),
+      child: Column(
+        children: [
+          ClipRRect(
+            borderRadius: BorderRadius.circular(12),
+            child: image,
+          ),
+          const SizedBox(
+            height: 16,
+          ),
+          Column(
+            crossAxisAlignment: CrossAxisAlignment.stretch,
+            children: [
+              Text(
+                name,
+                style: const TextStyle(
+                  fontSize: 20,
+                  fontWeight: FontWeight.w500,
+                ),
               ),
-            ),
-            const SizedBox(
-              height: 8,
-            ),
-            Text(
-              tags.join(' · '),
-              style: const TextStyle(
-                color: BODY_TEXT_COLOR,
-                fontSize: 14,
+              const SizedBox(
+                height: 8,
               ),
-            ),
-            const SizedBox(
-              height: 8,
-            ),
-            Row(
-              crossAxisAlignment: CrossAxisAlignment.center,
-              children: [
-                _IconText(
-                  icon: Icons.star,
-                  label: rating.toString(),
+              Text(
+                tags.join(' · '),
+                style: const TextStyle(
+                  color: BODY_TEXT_COLOR,
+                  fontSize: 14,
                 ),
-                renderDot(),
-                _IconText(
-                  icon: Icons.receipt,
-                  label: ratingCount.toString(),
-                ),
-                renderDot(),
-                _IconText(
-                  icon: Icons.timelapse_outlined,
-                  label: '$deliveryTime분',
-                ),
-                renderDot(),
-                _IconText(
-                  icon: Icons.monetization_on,
-                  label: '${deliveryFee == 0 ? "무료" : deliveryFee}',
-                ),
-              ],
-            )
-          ],
-        ),
-      ],
+              ),
+              const SizedBox(
+                height: 8,
+              ),
+              Row(
+                crossAxisAlignment: CrossAxisAlignment.center,
+                children: [
+                  _IconText(
+                    icon: Icons.star,
+                    label: ratings.toString(),
+                  ),
+                  renderDot(),
+                  _IconText(
+                    icon: Icons.receipt,
+                    label: ratingsCount.toString(),
+                  ),
+                  renderDot(),
+                  _IconText(
+                    icon: Icons.timelapse_outlined,
+                    label: '$deliveryTime분',
+                  ),
+                  renderDot(),
+                  _IconText(
+                    icon: Icons.monetization_on,
+                    label: '${deliveryFee == 0 ? "무료" : deliveryFee}',
+                  ),
+                ],
+              )
+            ],
+          ),
+        ],
+      ),
     );
   }
 
