@@ -9,8 +9,23 @@ class RootTab extends StatefulWidget {
   State<RootTab> createState() => _RootTabState();
 }
 
-class _RootTabState extends State<RootTab> {
-  int tabIndex = 0;
+class _RootTabState extends State<RootTab> with TickerProviderStateMixin {
+  late TabController tabController;
+
+  @override
+  void initState() {
+    super.initState();
+
+    tabController = TabController(
+      length: 4,
+      vsync: this,
+    );
+    tabController.addListener(tabListener);
+  }
+
+  void tabListener() {
+    setState(() {});
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -24,11 +39,9 @@ class _RootTabState extends State<RootTab> {
         unselectedFontSize: 10,
         type: BottomNavigationBarType.fixed,
         onTap: (value) {
-          setState(() {
-            tabIndex = value;
-          });
+          tabController.animateTo(value);
         },
-        currentIndex: tabIndex,
+        currentIndex: tabController.index,
         items: const [
           BottomNavigationBarItem(
             activeIcon: Icon(Icons.home),
@@ -52,8 +65,27 @@ class _RootTabState extends State<RootTab> {
           ),
         ],
       ),
-      child: const Center(
-        child: Text('Root Screen'),
+      child: TabBarView(
+        physics: const NeverScrollableScrollPhysics(),
+        controller: tabController,
+        children: [
+          Container(
+            color: Colors.red,
+            height: 300,
+          ),
+          Container(
+            color: Colors.orange,
+            height: 300,
+          ),
+          Container(
+            color: Colors.yellow,
+            height: 300,
+          ),
+          Container(
+            color: Colors.green,
+            height: 300,
+          ),
+        ],
       ),
     );
   }
