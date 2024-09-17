@@ -104,10 +104,11 @@ class _LoginScreenState extends State<LoginScreen> {
                       value: accessToken,
                     );
 
-                    Navigator.of(context).push(
+                    Navigator.of(context).pushAndRemoveUntil(
                       MaterialPageRoute(
                         builder: (_) => const RootTab(),
                       ),
+                      (route) => false,
                     );
                   },
                   style: ElevatedButton.styleFrom(
