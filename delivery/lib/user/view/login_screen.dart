@@ -1,5 +1,4 @@
 import 'dart:convert';
-import 'dart:io';
 
 import 'package:delivery/common/component/custom_text_form_field.dart';
 import 'package:delivery/common/const/colors.dart';
@@ -23,12 +22,6 @@ class _LoginScreenState extends State<LoginScreen> {
   @override
   Widget build(BuildContext context) {
     final dio = Dio();
-    // Android Emulator의 localhost
-    const emulatorIp = '10.0.2.2';
-    // iOS Simulator의 localhost
-    const simulatorIp = '127.0.0.1';
-
-    final ip = Platform.isIOS ? simulatorIp : emulatorIp;
 
     return DefaultLayout(
       child: SingleChildScrollView(
@@ -118,20 +111,7 @@ class _LoginScreenState extends State<LoginScreen> {
                   child: const Text('로그인'),
                 ),
                 TextButton(
-                  onPressed: () async {
-                    // const refreshToken =
-                    //     'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6InRlc3RAY29kZWZhY3RvcnkuYWkiLCJzdWIiOiJmNTViMzJkMi00ZDY4LTRjMWUtYTNjYS1kYTlkN2QwZDkyZTUiLCJ0eXBlIjoicmVmcmVzaCIsImlhdCI6MTcyNjQ3MDc2MiwiZXhwIjoxNzI2NTU3MTYyfQ.HwAd9bY2cdCjSxdSqqTZ5e13QYpiCGGhYCqBgdrY2WI';
-                    // final res = await dio.post(
-                    //   'http://$ip:3000/auth/token',
-                    //   options: Options(
-                    //     headers: {
-                    //       'authorization': 'Bearer $refreshToken',
-                    //     },
-                    //   ),
-                    // );
-
-                    // print(res.data);
-                  },
+                  onPressed: () async {},
                   style: TextButton.styleFrom(
                     foregroundColor: Colors.black,
                   ),

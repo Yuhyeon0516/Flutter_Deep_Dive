@@ -56,6 +56,7 @@ class RestaurantCard extends StatelessWidget {
               height: 8,
             ),
             Row(
+              crossAxisAlignment: CrossAxisAlignment.center,
               children: [
                 _IconText(
                   icon: Icons.star,
@@ -111,6 +112,7 @@ class _IconText extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Row(
+      crossAxisAlignment: CrossAxisAlignment.center,
       children: [
         Icon(
           icon,
