@@ -54,7 +54,7 @@ class RestaurantDetailScreen extends StatelessWidget {
             );
           }
 
-          final item = RestaurantDetailModel.fromJson(json: snapshot.data!);
+          final item = RestaurantDetailModel.fromJson(snapshot.data!);
 
           return CustomScrollView(
             slivers: [
@@ -63,7 +63,7 @@ class RestaurantDetailScreen extends StatelessWidget {
               ),
               renderLabel(),
               renderProducts(
-                products: item.proucts,
+                products: item.products,
               ),
             ],
           );
