@@ -4,6 +4,7 @@ import 'package:delivery/common/layout/default_layout.dart';
 import 'package:delivery/product/component/product_card.dart';
 import 'package:delivery/restaurant/component/restaurant_card.dart';
 import 'package:delivery/restaurant/model/restaurant_detail_model.dart';
+import 'package:delivery/restaurant/repository/restaurant_repository.dart';
 import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
 
@@ -15,20 +16,12 @@ class RestaurantDetailScreen extends StatelessWidget {
     required this.id,
   });
 
-  Future<Map<String, dynamic>> getRestaurantDetail() async {
+  Future<RestaurantDetailModel> getRestaurantDetail() async {
     final dio = Dio();
-    final accessToken = await storage.read(key: ACCESS_TOKEN_KEY);
+    final repository =
+        RestaurantRepository(dio, baseUrl: 'http://$ip:3000/restaurant');
 
-    final res = await dio.get(
-      'http://$ip:3000/restaurant/$id',
-      options: Options(
-        headers: {
-          'authorization': 'Bearer $accessToken',
-        },
-      ),
-    );
-
-    return res.data;
+    return repository.getRestaurantDetail(id: id);
   }
 
   @override
@@ -54,16 +47,14 @@ class RestaurantDetailScreen extends StatelessWidget {
             );
           }
 
-          final item = RestaurantDetailModel.fromJson(snapshot.data!);
-
           return CustomScrollView(
             slivers: [
               renderTop(
-                model: item,
+                model: snapshot.data!,
               ),
               renderLabel(),
               renderProducts(
-                products: item.products,
+                products: snapshot.data!.products,
               ),
             ],
           );
