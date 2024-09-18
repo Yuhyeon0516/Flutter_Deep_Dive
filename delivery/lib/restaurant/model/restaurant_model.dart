@@ -1,4 +1,5 @@
 import 'package:delivery/common/const/data.dart';
+import 'package:delivery/common/utils/data_utils.dart';
 import 'package:json_annotation/json_annotation.dart';
 
 part 'restaurant_model.g.dart';
@@ -14,10 +15,7 @@ class RestaurantModel {
   final String id;
   final String name;
   @JsonKey(
-    // fromJsos이 실행 됐을때
-    fromJson: pathToUrl,
-    // toJson이 실행 됐을때
-    // toJson:
+    fromJson: DataUtils.pathToUrl,
   )
   final String thumbUrl;
   final List<String> tags;
