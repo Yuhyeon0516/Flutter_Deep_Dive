@@ -11,6 +11,7 @@ class RestaurantScreen extends StatelessWidget {
 
   Future<List> paginateRestaurant() async {
     final dio = Dio();
+
     final accessToken = await storage.read(key: ACCESS_TOKEN_KEY);
 
     final res = await dio.get('http://$ip:3000/restaurant',
