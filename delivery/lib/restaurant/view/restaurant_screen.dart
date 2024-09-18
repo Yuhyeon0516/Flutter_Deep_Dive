@@ -2,6 +2,7 @@ import 'package:delivery/common/const/colors.dart';
 import 'package:delivery/common/const/data.dart';
 import 'package:delivery/restaurant/component/restaurant_card.dart';
 import 'package:delivery/restaurant/model/restaurant_model.dart';
+import 'package:delivery/restaurant/view/restaurant_detail_screen.dart';
 import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
 
@@ -46,8 +47,20 @@ class RestaurantScreen extends StatelessWidget {
                 json: item,
               );
 
-              return RestaurantCard.fromModel(
-                model: parseItem,
+              return GestureDetector(
+                onTap: () {
+                  Navigator.of(context).push(
+                    MaterialPageRoute(
+                      builder: (_) => const RestaurantDetailScreen(),
+                    ),
+                  );
+                },
+                child: Padding(
+                  padding: const EdgeInsets.symmetric(horizontal: 12),
+                  child: RestaurantCard.fromModel(
+                    model: parseItem,
+                  ),
+                ),
               );
             },
             separatorBuilder: (_, index) {
