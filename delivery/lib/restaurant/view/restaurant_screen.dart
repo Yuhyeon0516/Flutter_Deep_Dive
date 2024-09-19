@@ -1,7 +1,9 @@
 import 'package:delivery/common/const/colors.dart';
 import 'package:delivery/common/const/data.dart';
+import 'package:delivery/common/dio/dio.dart';
 import 'package:delivery/restaurant/component/restaurant_card.dart';
 import 'package:delivery/restaurant/model/restaurant_model.dart';
+import 'package:delivery/restaurant/repository/restaurant_repository.dart';
 import 'package:delivery/restaurant/view/restaurant_detail_screen.dart';
 import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
@@ -9,20 +11,22 @@ import 'package:flutter/material.dart';
 class RestaurantScreen extends StatelessWidget {
   const RestaurantScreen({super.key});
 
-  Future<List> paginateRestaurant() async {
+  Future<List<RestaurantModel>> paginateRestaurant() async {
     final dio = Dio();
+    dio.interceptors.add(
+      CustomInterceptor(storage: storage),
+    );
 
-    final accessToken = await storage.read(key: ACCESS_TOKEN_KEY);
+    final res =
+        await RestaurantRepository(dio, baseUrl: 'http://$ip:3000/restaurant')
+            .paginate();
 
-    final res = await dio.get('http://$ip:3000/restaurant',
-        options: Options(headers: {'authorization': 'Bearer $accessToken'}));
-
-    return res.data['data'];
+    return res.data;
   }
 
   @override
   Widget build(BuildContext context) {
-    return FutureBuilder<List>(
+    return FutureBuilder<List<RestaurantModel>>(
       future: paginateRestaurant(),
       builder: (context, snapshot) {
         if (snapshot.hasError) {
@@ -43,10 +47,7 @@ class RestaurantScreen extends StatelessWidget {
 
         return ListView.separated(
             itemBuilder: (_, index) {
-              final item = snapshot.data![index];
-              final parseItem = RestaurantModel.fromJson(
-                item,
-              );
+              final parseItem = snapshot.data![index];
 
               return GestureDetector(
                 onTap: () {
