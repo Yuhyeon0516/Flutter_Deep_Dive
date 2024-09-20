@@ -6,6 +6,7 @@ import 'package:delivery/restaurant/model/restaurant_model.dart';
 import 'package:delivery/restaurant/provider/restaurant_provider.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:skeletonizer/skeletonizer.dart';
 
 class RestaurantDetailScreen extends ConsumerStatefulWidget {
   final String id;
@@ -42,18 +43,36 @@ class _RestaurantDetailScreenState
     }
 
     return DefaultLayout(
-      title: '불타는 떡볶이',
+      title: state.name,
       child: CustomScrollView(
         slivers: [
           renderTop(
             model: state,
           ),
+          if (state is! RestaurantDetailModel)
+            SliverSkeletonizer(
+              child: renderLoading(),
+            ),
           if (state is RestaurantDetailModel) renderLabel(),
           if (state is RestaurantDetailModel)
             renderProducts(
               products: state.products,
             ),
         ],
+      ),
+    );
+  }
+
+  SliverPadding renderLoading() {
+    return SliverPadding(
+      padding: const EdgeInsets.all(16),
+      sliver: SliverList(
+        delegate: SliverChildListDelegate(
+          List.generate(
+            5,
+            (index) => const Text('\n\n\n\n'),
+          ),
+        ),
       ),
     );
   }
