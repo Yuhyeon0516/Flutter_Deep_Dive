@@ -1,6 +1,5 @@
 import 'package:delivery/common/const/colors.dart';
-import 'package:delivery/common/const/data.dart';
-import 'package:delivery/common/dio/dio_provider.dart';
+import 'package:delivery/common/model/cursor_pagination_model.dart';
 import 'package:delivery/restaurant/component/restaurant_card.dart';
 import 'package:delivery/restaurant/model/restaurant_model.dart';
 import 'package:delivery/restaurant/repository/restaurant_repository.dart';
@@ -11,20 +10,10 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 class RestaurantScreen extends ConsumerWidget {
   const RestaurantScreen({super.key});
 
-  Future<List<RestaurantModel>> paginateRestaurant(WidgetRef ref) async {
-    final dio = ref.read(dioProvider);
-
-    final res =
-        await RestaurantRepository(dio, baseUrl: 'http://$ip:3000/restaurant')
-            .paginate();
-
-    return res.data;
-  }
-
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    return FutureBuilder<List<RestaurantModel>>(
-      future: paginateRestaurant(ref),
+    return FutureBuilder<CursorPaginationModel<RestaurantModel>>(
+      future: ref.watch(restaurantRepositoryProvider).paginate(),
       builder: (context, snapshot) {
         if (snapshot.hasError) {
           print(snapshot.error);
@@ -44,7 +33,7 @@ class RestaurantScreen extends ConsumerWidget {
 
         return ListView.separated(
             itemBuilder: (_, index) {
-              final parseItem = snapshot.data![index];
+              final parseItem = snapshot.data!.data[index];
 
               return GestureDetector(
                 onTap: () {
@@ -67,7 +56,7 @@ class RestaurantScreen extends ConsumerWidget {
             separatorBuilder: (_, index) {
               return const SizedBox(height: 16);
             },
-            itemCount: snapshot.data!.length);
+            itemCount: snapshot.data!.data.length);
       },
     );
   }
