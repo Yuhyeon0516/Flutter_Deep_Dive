@@ -9,14 +9,16 @@ import 'package:riverpod_annotation/riverpod_annotation.dart';
 
 part 'restaurant_repository.g.dart';
 
-@riverpod
-RestaurantRepository restaurantRepository(RestaurantRepositoryRef ref) {
-  final dio = ref.read(dioProvider);
-  final repository =
-      RestaurantRepository(dio, baseUrl: 'http://$ip:3000/restaurant');
+final restaurantRepositoryProvider = Provider<RestaurantRepository>(
+  (ref) {
+    final dio = ref.watch(dioProvider);
 
-  return repository;
-}
+    final repository =
+        RestaurantRepository(dio, baseUrl: 'http://$ip:3000/restaurant');
+
+    return repository;
+  },
+);
 
 @RestApi()
 abstract class RestaurantRepository {

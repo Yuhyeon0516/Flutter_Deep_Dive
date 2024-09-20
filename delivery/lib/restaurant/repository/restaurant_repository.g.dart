@@ -124,27 +124,3 @@ class _RestaurantRepository implements RestaurantRepository {
     return Uri.parse(dioBaseUrl).resolveUri(url).toString();
   }
 }
-
-// **************************************************************************
-// RiverpodGenerator
-// **************************************************************************
-
-String _$restaurantRepositoryHash() =>
-    r'576b296b7564f28cc9adb75ac304f618e34a2280';
-
-/// See also [restaurantRepository].
-@ProviderFor(restaurantRepository)
-final restaurantRepositoryProvider =
-    AutoDisposeProvider<RestaurantRepository>.internal(
-  restaurantRepository,
-  name: r'restaurantRepositoryProvider',
-  debugGetCreateSourceHash: const bool.fromEnvironment('dart.vm.product')
-      ? null
-      : _$restaurantRepositoryHash,
-  dependencies: null,
-  allTransitiveDependencies: null,
-);
-
-typedef RestaurantRepositoryRef = AutoDisposeProviderRef<RestaurantRepository>;
-// ignore_for_file: type=lint
-// ignore_for_file: subtype_of_sealed_class, invalid_use_of_internal_member, invalid_use_of_visible_for_testing_member
