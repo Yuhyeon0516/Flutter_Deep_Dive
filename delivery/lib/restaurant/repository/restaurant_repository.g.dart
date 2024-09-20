@@ -22,9 +22,12 @@ class _RestaurantRepository implements RestaurantRepository {
   final ParseErrorLogger? errorLogger;
 
   @override
-  Future<CursorPaginationModel<RestaurantModel>> paginate() async {
+  Future<CursorPaginationModel<RestaurantModel>> paginate(
+      {PaginationParams? params = const PaginationParams()}) async {
     final _extra = <String, dynamic>{};
     final queryParameters = <String, dynamic>{};
+    queryParameters.addAll(params?.toJson() ?? <String, dynamic>{});
+    queryParameters.removeWhere((k, v) => v == null);
     final _headers = <String, dynamic>{r'accessToken': 'true'};
     _headers.removeWhere((k, v) => v == null);
     const Map<String, dynamic>? _data = null;
