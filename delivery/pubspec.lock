@@ -199,7 +199,7 @@ packages:
     source: hosted
     version: "1.0.8"
   custom_lint:
-    dependency: transitive
+    dependency: "direct dev"
     description:
       name: custom_lint
       sha256: "6e1ec47427ca968f22bce734d00028ae7084361999b41673291138945c5baca0"
