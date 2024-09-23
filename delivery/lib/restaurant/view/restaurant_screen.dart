@@ -1,5 +1,6 @@
 import 'package:delivery/common/component/pagination_list_view.dart';
 import 'package:delivery/restaurant/component/restaurant_card.dart';
+import 'package:delivery/restaurant/model/restaurant_model.dart';
 import 'package:delivery/restaurant/provider/restaurant_provider.dart';
 import 'package:delivery/restaurant/view/restaurant_detail_screen.dart';
 import 'package:flutter/material.dart';
@@ -9,7 +10,7 @@ class RestaurantScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return PaginationListView(
+    return PaginationListView<RestaurantModel>(
       provider: restaurantProvider,
       itemBuilder: <RestaurantModel>(context, index, model) {
         return GestureDetector(
