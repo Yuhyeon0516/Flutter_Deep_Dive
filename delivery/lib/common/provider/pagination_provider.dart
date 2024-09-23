@@ -11,7 +11,9 @@ class PaginationProvider<T extends IModelWithId,
 
   PaginationProvider({
     required this.repository,
-  }) : super(CursorPaginationLoading());
+  }) : super(CursorPaginationLoading()) {
+    paginate();
+  }
 
   Future<void> paginate({
     // 가져올 게시물 갯수
@@ -92,7 +94,9 @@ class PaginationProvider<T extends IModelWithId,
       } else {
         state = res;
       }
-    } catch (e) {
+    } catch (e, stack) {
+      print(e);
+      print(stack);
       state = CursorPaginationError(message: '데이터를 가져오지 못하였습니다.');
     }
   }

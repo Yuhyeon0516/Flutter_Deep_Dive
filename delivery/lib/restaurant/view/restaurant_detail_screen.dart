@@ -5,6 +5,7 @@ import 'package:delivery/restaurant/component/restaurant_card.dart';
 import 'package:delivery/restaurant/model/restaurant_detail_model.dart';
 import 'package:delivery/restaurant/model/restaurant_model.dart';
 import 'package:delivery/restaurant/provider/restaurant_provider.dart';
+import 'package:delivery/restaurant/provider/restaurant_rating_provider.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:skeletonizer/skeletonizer.dart';
@@ -34,6 +35,9 @@ class _RestaurantDetailScreenState
   @override
   Widget build(BuildContext context) {
     final state = ref.watch(restaurantDetailProvider(widget.id));
+    final ratingState = ref.watch(restaurantRatingProvider(widget.id));
+
+    print(ratingState);
 
     if (state == null) {
       return const DefaultLayout(
