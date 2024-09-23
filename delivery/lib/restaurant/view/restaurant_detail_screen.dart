@@ -1,5 +1,6 @@
 import 'package:delivery/common/layout/default_layout.dart';
 import 'package:delivery/product/component/product_card.dart';
+import 'package:delivery/rating/component/rating_card.dart';
 import 'package:delivery/restaurant/component/restaurant_card.dart';
 import 'package:delivery/restaurant/model/restaurant_detail_model.dart';
 import 'package:delivery/restaurant/model/restaurant_model.dart';
@@ -58,6 +59,18 @@ class _RestaurantDetailScreenState
             renderProducts(
               products: state.products,
             ),
+          const SliverPadding(
+            padding: EdgeInsets.symmetric(horizontal: 16),
+            sliver: SliverToBoxAdapter(
+              child: RatingCard(
+                avatarImage: AssetImage('asset/img/logo/logo.png'),
+                images: [],
+                rating: 4,
+                email: 'test@test.com',
+                content: 'JMT',
+              ),
+            ),
+          )
         ],
       ),
     );
