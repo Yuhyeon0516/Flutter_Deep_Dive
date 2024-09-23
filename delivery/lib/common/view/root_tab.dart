@@ -73,7 +73,7 @@ class _RootTabState extends State<RootTab> with TickerProviderStateMixin {
         controller: tabController,
         children: [
           const RestaurantScreen(),
-          const ProductScreen(),
+          ProductScreen(),
           Container(
             color: Colors.yellow,
             height: 300,

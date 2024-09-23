@@ -12,7 +12,7 @@ class RestaurantScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     return PaginationListView<RestaurantModel>(
       provider: restaurantProvider,
-      itemBuilder: <RestaurantModel>(context, index, model) {
+      itemBuilder: (context, index, model) {
         return GestureDetector(
           onTap: () {
             Navigator.of(context).push(
