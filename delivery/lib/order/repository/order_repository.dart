@@ -1,5 +1,8 @@
 import 'package:delivery/common/const/data.dart';
 import 'package:delivery/common/dio/dio_provider.dart';
+import 'package:delivery/common/model/cursor_pagination_model.dart';
+import 'package:delivery/common/model/pagination_params.dart';
+import 'package:delivery/common/repository/base_pagination_respository.dart';
 import 'package:delivery/order/model/order_model.dart';
 import 'package:delivery/order/model/post_order_body.dart';
 import 'package:dio/dio.dart' hide Headers;
@@ -15,8 +18,18 @@ final orderRepositoryProvider = Provider<OrderRepository>((ref) {
 });
 
 @RestApi()
-abstract class OrderRepository {
+abstract class OrderRepository
+    implements IBasePaginationRespository<OrderModel> {
   factory OrderRepository(Dio dio, {String baseUrl}) = _OrderRepository;
+
+  @override
+  @GET('/')
+  @Headers({
+    'accessToken': 'true',
+  })
+  Future<CursorPaginationModel<OrderModel>> paginate({
+    @Queries() PaginationParams? params = const PaginationParams(),
+  });
 
   @POST('/')
   @Headers({
