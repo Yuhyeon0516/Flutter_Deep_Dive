@@ -50,6 +50,8 @@ dependencies:
 
   collection: any
 
+  go_router: ^14.2.7
+
 dev_dependencies:
   flutter_test:
     sdk: flutter
