@@ -1,5 +1,6 @@
 import 'package:delivery/common/const/colors.dart';
 import 'package:delivery/common/layout/default_layout.dart';
+import 'package:delivery/order/view/order_screen.dart';
 import 'package:delivery/product/view/product_screen.dart';
 import 'package:delivery/restaurant/view/restaurant_screen.dart';
 import 'package:delivery/user/view/profile_screen.dart';
@@ -74,14 +75,11 @@ class _RootTabState extends State<RootTab> with TickerProviderStateMixin {
       child: TabBarView(
         physics: const NeverScrollableScrollPhysics(),
         controller: tabController,
-        children: [
-          const RestaurantScreen(),
-          const ProductScreen(),
-          Container(
-            color: Colors.yellow,
-            height: 300,
-          ),
-          const ProfileScreen(),
+        children: const [
+          RestaurantScreen(),
+          ProductScreen(),
+          OrderScreen(),
+          ProfileScreen(),
         ],
       ),
     );
