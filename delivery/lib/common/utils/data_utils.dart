@@ -18,4 +18,8 @@ class DataUtils {
 
     return encoded;
   }
+
+  static DateTime stringToDateTime(String date) {
+    return DateTime.parse(date);
+  }
 }
