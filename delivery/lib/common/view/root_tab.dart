@@ -2,9 +2,12 @@ import 'package:delivery/common/const/colors.dart';
 import 'package:delivery/common/layout/default_layout.dart';
 import 'package:delivery/product/view/product_screen.dart';
 import 'package:delivery/restaurant/view/restaurant_screen.dart';
+import 'package:delivery/user/view/profile_screen.dart';
 import 'package:flutter/material.dart';
 
 class RootTab extends StatefulWidget {
+  static String get routeName => 'home';
+
   const RootTab({super.key});
 
   @override
@@ -73,15 +76,12 @@ class _RootTabState extends State<RootTab> with TickerProviderStateMixin {
         controller: tabController,
         children: [
           const RestaurantScreen(),
-          ProductScreen(),
+          const ProductScreen(),
           Container(
             color: Colors.yellow,
             height: 300,
           ),
-          Container(
-            color: Colors.green,
-            height: 300,
-          ),
+          const ProfileScreen(),
         ],
       ),
     );
