@@ -1,17 +1,14 @@
-import 'dart:convert';
-
 import 'package:delivery/common/component/custom_text_form_field.dart';
 import 'package:delivery/common/const/colors.dart';
-import 'package:delivery/common/const/data.dart';
-import 'package:delivery/common/dio/dio_provider.dart';
 import 'package:delivery/common/layout/default_layout.dart';
-import 'package:delivery/common/secure_storage/secure_storage_provider.dart';
-import 'package:delivery/common/view/root_tab.dart';
-import 'package:dio/dio.dart';
+import 'package:delivery/user/model/user_model.dart';
+import 'package:delivery/user/provider/user_me_provider.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 class LoginScreen extends ConsumerStatefulWidget {
+  static String get routeName => 'login';
+
   const LoginScreen({super.key});
 
   @override
@@ -24,7 +21,7 @@ class _LoginScreenState extends ConsumerState<LoginScreen> {
 
   @override
   Widget build(BuildContext context) {
-    final dio = ref.read(dioProvider);
+    final state = ref.watch(userMeProvider);
 
     return DefaultLayout(
       child: SingleChildScrollView(
@@ -71,44 +68,13 @@ class _LoginScreenState extends ConsumerState<LoginScreen> {
                   height: 16,
                 ),
                 ElevatedButton(
-                  onPressed: () async {
-                    // id:pw
-                    final rawString = '$username:$password';
-
-                    Codec<String, String> stringToBase64 = utf8.fuse(base64);
-
-                    String token = stringToBase64.encode(rawString);
-
-                    final res = await dio.post(
-                      'http://$ip:3000/auth/login',
-                      options: Options(
-                        headers: {
-                          'authorization': 'Basic $token',
+                  onPressed: state is UserModelLoading
+                      ? null
+                      : () async {
+                          ref
+                              .read(userMeProvider.notifier)
+                              .login(username: username, password: password);
                         },
-                      ),
-                    );
-
-                    final refreshToken = res.data['refreshToken'];
-                    final accessToken = res.data['accessToken'];
-
-                    final storage = ref.read(secureStorageProvider);
-
-                    await storage.write(
-                      key: REFRESH_TOKEN_KEY,
-                      value: refreshToken,
-                    );
-                    await storage.write(
-                      key: ACCESS_TOKEN_KEY,
-                      value: accessToken,
-                    );
-
-                    Navigator.of(context).pushAndRemoveUntil(
-                      MaterialPageRoute(
-                        builder: (_) => const RootTab(),
-                      ),
-                      (route) => false,
-                    );
-                  },
                   style: ElevatedButton.styleFrom(
                     backgroundColor: PRIMARY_COLOR,
                     foregroundColor: Colors.white,
