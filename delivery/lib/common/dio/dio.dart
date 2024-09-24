@@ -1,6 +1,5 @@
 import 'package:delivery/common/const/data.dart';
 import 'package:delivery/user/provider/auth_provider.dart';
-import 'package:delivery/user/provider/user_me_provider.dart';
 import 'package:dio/dio.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
