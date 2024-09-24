@@ -79,7 +79,15 @@ class _LoginScreenState extends ConsumerState<LoginScreen> {
                     backgroundColor: PRIMARY_COLOR,
                     foregroundColor: Colors.white,
                   ),
-                  child: const Text('로그인'),
+                  child: state is UserModelLoading
+                      ? const SizedBox(
+                          width: 15,
+                          height: 15,
+                          child: CircularProgressIndicator(
+                            strokeWidth: 2,
+                          ),
+                        )
+                      : const Text('로그인'),
                 ),
                 TextButton(
                   onPressed: () async {},
