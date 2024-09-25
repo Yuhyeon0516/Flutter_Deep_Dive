@@ -1,4 +1,4 @@
-import 'package:e_commerce/presentation/pages/home/home_page.dart';
+import 'package:e_commerce/presentation/main/main_screen.dart';
 import 'package:e_commerce/presentation/pages/splash/splash_page.dart';
 import 'package:e_commerce/presentation/routes/route_path.dart';
 import 'package:go_router/go_router.dart';
@@ -12,9 +12,9 @@ final GoRouter router = GoRouter(
       builder: (context, state) => const SplashPage(),
     ),
     GoRoute(
-      path: RoutePath.home,
-      name: HomePage.routeName,
-      builder: (context, state) => const HomePage(),
+      path: RoutePath.main,
+      name: MainScreen.routeName,
+      builder: (context, state) => const MainScreen(),
     ),
   ],
 );

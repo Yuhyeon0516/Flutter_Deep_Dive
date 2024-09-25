@@ -22,7 +22,7 @@ class _SplashPageState extends State<SplashPage> {
     super.initState();
 
     // TODO 로그인 bloc
-    Timer(const Duration(seconds: 2), () => context.go(RoutePath.home));
+    Timer(const Duration(seconds: 2), () => context.go(RoutePath.main));
   }
 
   @override
