@@ -20,8 +20,8 @@ MenuDto _$MenuDtoFromJson(Map<String, dynamic> json) {
 
 /// @nodoc
 mixin _$MenuDto {
-  String get title => throw _privateConstructorUsedError;
-  int get tabId => throw _privateConstructorUsedError;
+  String? get title => throw _privateConstructorUsedError;
+  int? get tabId => throw _privateConstructorUsedError;
 
   /// Serializes this MenuDto to a JSON map.
   Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
@@ -37,7 +37,7 @@ abstract class $MenuDtoCopyWith<$Res> {
   factory $MenuDtoCopyWith(MenuDto value, $Res Function(MenuDto) then) =
       _$MenuDtoCopyWithImpl<$Res, MenuDto>;
   @useResult
-  $Res call({String title, int tabId});
+  $Res call({String? title, int? tabId});
 }
 
 /// @nodoc
@@ -55,18 +55,18 @@ class _$MenuDtoCopyWithImpl<$Res, $Val extends MenuDto>
   @pragma('vm:prefer-inline')
   @override
   $Res call({
-    Object? title = null,
-    Object? tabId = null,
+    Object? title = freezed,
+    Object? tabId = freezed,
   }) {
     return _then(_value.copyWith(
-      title: null == title
+      title: freezed == title
           ? _value.title
           : title // ignore: cast_nullable_to_non_nullable
-              as String,
-      tabId: null == tabId
+              as String?,
+      tabId: freezed == tabId
           ? _value.tabId
           : tabId // ignore: cast_nullable_to_non_nullable
-              as int,
+              as int?,
     ) as $Val);
   }
 }
@@ -78,7 +78,7 @@ abstract class _$$MenuDtoImplCopyWith<$Res> implements $MenuDtoCopyWith<$Res> {
       __$$MenuDtoImplCopyWithImpl<$Res>;
   @override
   @useResult
-  $Res call({String title, int tabId});
+  $Res call({String? title, int? tabId});
 }
 
 /// @nodoc
@@ -94,18 +94,18 @@ class __$$MenuDtoImplCopyWithImpl<$Res>
   @pragma('vm:prefer-inline')
   @override
   $Res call({
-    Object? title = null,
-    Object? tabId = null,
+    Object? title = freezed,
+    Object? tabId = freezed,
   }) {
     return _then(_$MenuDtoImpl(
-      title: null == title
+      title: freezed == title
           ? _value.title
           : title // ignore: cast_nullable_to_non_nullable
-              as String,
-      tabId: null == tabId
+              as String?,
+      tabId: freezed == tabId
           ? _value.tabId
           : tabId // ignore: cast_nullable_to_non_nullable
-              as int,
+              as int?,
     ));
   }
 }
@@ -120,10 +120,10 @@ class _$MenuDtoImpl implements _MenuDto {
 
   @override
   @JsonKey()
-  final String title;
+  final String? title;
   @override
   @JsonKey()
-  final int tabId;
+  final int? tabId;
 
   @override
   String toString() {
@@ -160,14 +160,14 @@ class _$MenuDtoImpl implements _MenuDto {
 }
 
 abstract class _MenuDto implements MenuDto {
-  factory _MenuDto({final String title, final int tabId}) = _$MenuDtoImpl;
+  factory _MenuDto({final String? title, final int? tabId}) = _$MenuDtoImpl;
 
   factory _MenuDto.fromJson(Map<String, dynamic> json) = _$MenuDtoImpl.fromJson;
 
   @override
-  String get title;
+  String? get title;
   @override
-  int get tabId;
+  int? get tabId;
 
   /// Create a copy of MenuDto
   /// with the given fields replaced by the non-null parameter values.

@@ -6,8 +6,8 @@ part 'menu.dto.g.dart';
 @freezed
 class MenuDto with _$MenuDto {
   factory MenuDto({
-    @Default('') String title,
-    @Default(-1) int tabId,
+    @Default('') String? title,
+    @Default(-1) int? tabId,
   }) = _MenuDto;
 
   factory MenuDto.fromJson(Map<String, dynamic> json) =>
