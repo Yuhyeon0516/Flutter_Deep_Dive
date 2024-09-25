@@ -112,7 +112,7 @@ class CustomTheme {
   static const colorScheme = ColorScheme(
     brightness: Brightness.light,
     primary: AppColors.primary,
-    onPrimary: Colors.black,
+    onPrimary: Colors.white,
     primaryContainer: AppColors.primaryContainer,
     secondary: AppColors.secondary,
     onSecondary: AppColors.onSecondary,
