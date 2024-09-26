@@ -1,6 +1,7 @@
 import 'package:e_commerce/core/theme/constant/app_icons.dart';
 import 'package:e_commerce/core/theme/custom/custom_app_bar.dart';
 import 'package:e_commerce/core/theme/custom/custom_font_weight.dart';
+import 'package:e_commerce/core/utils/constant.dart';
 import 'package:e_commerce/presentation/main/component/widgets/svg_icon_button.dart';
 import 'package:e_commerce/presentation/main/cubit/mall_type_cubit.dart';
 import 'package:flutter/material.dart';

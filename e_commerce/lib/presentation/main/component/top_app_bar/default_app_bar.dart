@@ -1,4 +1,5 @@
 import 'package:e_commerce/core/theme/custom/custom_theme.dart';
+import 'package:e_commerce/core/utils/constant.dart';
 import 'package:e_commerce/presentation/main/cubit/bottom_navigation_cubit.dart';
 import 'package:e_commerce/presentation/main/cubit/mall_type_cubit.dart';
 import 'package:flutter/material.dart';

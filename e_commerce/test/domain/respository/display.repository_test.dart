@@ -1,3 +1,4 @@
+import 'package:e_commerce/core/utils/constant.dart';
 import 'package:e_commerce/data/data_source/mock/display/display_mock_api.dart';
 import 'package:e_commerce/data/data_source/remote/display.api.dart';
 import 'package:e_commerce/data/mapper/common.mapper.dart';
@@ -5,7 +6,6 @@ import 'package:e_commerce/data/mapper/display.mapper.dart';
 import 'package:e_commerce/data/repository_impl/display.repository_impl.dart';
 import 'package:e_commerce/domain/model/display/menu/menu.model.dart';
 import 'package:e_commerce/domain/repository/display.repository.dart';
-import 'package:e_commerce/presentation/main/cubit/mall_type_cubit.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:mocktail/mocktail.dart';
 

@@ -1,10 +1,6 @@
 import 'package:e_commerce/core/theme/custom/custom_app_bar.dart';
+import 'package:e_commerce/core/utils/constant.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-
-enum MallType {
-  market,
-  beauty,
-}
 
 class MallTypeCubit extends Cubit<MallType> {
   MallTypeCubit() : super(MallType.market);

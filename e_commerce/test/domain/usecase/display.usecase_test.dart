@@ -1,3 +1,4 @@
+import 'package:e_commerce/core/utils/constant.dart';
 import 'package:e_commerce/core/utils/error/error_response.dart';
 import 'package:e_commerce/data/data_source/remote/display.api.dart';
 import 'package:e_commerce/data/repository_impl/display.repository_impl.dart';
@@ -41,7 +42,7 @@ void main() {
   });
 
   test('메뉴 리스트 불러오기 실패', () async {
-    final res = Result<List<Menu>>.failure(ErrorResponse(status: 'error'));
+    const res = Result<List<Menu>>.failure(ErrorResponse(status: 'error'));
 
     final usecase = MockGetMenusUsecase();
 
