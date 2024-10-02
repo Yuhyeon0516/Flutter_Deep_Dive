@@ -4,6 +4,7 @@ import 'package:spotify/core/configs/theme/app_colors.dart';
 class AppTheme {
   static final lightTheme = ThemeData(
     brightness: Brightness.light,
+    fontFamily: 'Satoshi',
     primaryColor: AppColors.primary,
     scaffoldBackgroundColor: AppColors.lightBackground,
     elevatedButtonTheme: ElevatedButtonThemeData(
@@ -22,6 +23,7 @@ class AppTheme {
 
   static final darkTheme = ThemeData(
     brightness: Brightness.dark,
+    fontFamily: 'Satoshi',
     primaryColor: AppColors.primary,
     scaffoldBackgroundColor: AppColors.darkBackground,
     elevatedButtonTheme: ElevatedButtonThemeData(
