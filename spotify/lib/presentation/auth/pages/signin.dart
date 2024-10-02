@@ -3,10 +3,10 @@ import 'package:flutter_svg/svg.dart';
 import 'package:spotify/common/widgets/appbar/basic_app_bar.dart';
 import 'package:spotify/common/widgets/button/basic_app_button.dart';
 import 'package:spotify/core/configs/assets/app_vetors.dart';
-import 'package:spotify/presentation/auth/pages/signin.dart';
+import 'package:spotify/presentation/auth/pages/signup.dart';
 
-class SignupPage extends StatelessWidget {
-  const SignupPage({super.key});
+class SigninPage extends StatelessWidget {
+  const SigninPage({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -29,10 +29,6 @@ class SignupPage extends StatelessWidget {
             const SizedBox(
               height: 50,
             ),
-            _fullNameField(context),
-            const SizedBox(
-              height: 16,
-            ),
             _emailField(context),
             const SizedBox(
               height: 16,
@@ -41,7 +37,7 @@ class SignupPage extends StatelessWidget {
             const SizedBox(
               height: 16,
             ),
-            BasicAppButton(onPressed: () {}, title: 'Create Account'),
+            BasicAppButton(onPressed: () {}, title: 'Sign In'),
             const SizedBox(
               height: 30,
             ),
@@ -54,7 +50,7 @@ class SignupPage extends StatelessWidget {
 
   Widget _registerText() {
     return const Text(
-      'Register',
+      'Sign In',
       style: TextStyle(
         fontWeight: FontWeight.bold,
         fontSize: 30,
@@ -63,16 +59,9 @@ class SignupPage extends StatelessWidget {
     );
   }
 
-  Widget _fullNameField(BuildContext context) {
-    return TextField(
-      decoration: const InputDecoration(hintText: 'Full Name')
-          .applyDefaults(Theme.of(context).inputDecorationTheme),
-    );
-  }
-
   Widget _emailField(BuildContext context) {
     return TextField(
-      decoration: const InputDecoration(hintText: 'Email')
+      decoration: const InputDecoration(hintText: 'Enter Email')
           .applyDefaults(Theme.of(context).inputDecorationTheme),
     );
   }
@@ -90,7 +79,7 @@ class SignupPage extends StatelessWidget {
       mainAxisAlignment: MainAxisAlignment.center,
       children: [
         const Text(
-          'Do You Have An Account?',
+          'Not A Memeber?',
           style: TextStyle(
             fontSize: 14,
             fontWeight: FontWeight.w500,
@@ -101,12 +90,12 @@ class SignupPage extends StatelessWidget {
             Navigator.push(
               context,
               MaterialPageRoute(
-                builder: (context) => const SigninPage(),
+                builder: (context) => const SignupPage(),
               ),
             );
           },
           child: const Text(
-            'Sign in',
+            'Register Now',
             style: TextStyle(color: Colors.blue),
           ),
         )
