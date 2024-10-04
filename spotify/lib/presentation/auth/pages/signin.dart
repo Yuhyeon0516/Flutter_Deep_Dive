@@ -23,7 +23,7 @@ class SigninPage extends StatelessWidget {
           height: 40,
         ),
       ),
-      body: Padding(
+      body: SingleChildScrollView(
         padding: const EdgeInsets.symmetric(horizontal: 28),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.stretch,

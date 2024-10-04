@@ -27,65 +27,63 @@ class SignupPage extends StatelessWidget {
       ),
       body: SingleChildScrollView(
         physics: const NeverScrollableScrollPhysics(),
-        child: Padding(
-          padding: const EdgeInsets.symmetric(horizontal: 28),
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.stretch,
-            children: [
-              const SizedBox(
-                height: 50,
-              ),
-              _registerText(),
-              const SizedBox(
-                height: 50,
-              ),
-              _fullNameField(context),
-              const SizedBox(
-                height: 16,
-              ),
-              _emailField(context),
-              const SizedBox(
-                height: 16,
-              ),
-              _passwordField(context),
-              const SizedBox(
-                height: 16,
-              ),
-              BasicAppButton(
-                onPressed: () async {
-                  final result = await sl<SignupUsecase>().call(
-                    params: CreateUserReq(
-                      fullName: _fullNameController.text.toString(),
-                      email: _emailController.text.toString(),
-                      password: _passwordController.text.toString(),
-                    ),
-                  );
+        padding: const EdgeInsets.symmetric(horizontal: 28),
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.stretch,
+          children: [
+            const SizedBox(
+              height: 50,
+            ),
+            _registerText(),
+            const SizedBox(
+              height: 50,
+            ),
+            _fullNameField(context),
+            const SizedBox(
+              height: 16,
+            ),
+            _emailField(context),
+            const SizedBox(
+              height: 16,
+            ),
+            _passwordField(context),
+            const SizedBox(
+              height: 16,
+            ),
+            BasicAppButton(
+              onPressed: () async {
+                final result = await sl<SignupUsecase>().call(
+                  params: CreateUserReq(
+                    fullName: _fullNameController.text.toString(),
+                    email: _emailController.text.toString(),
+                    password: _passwordController.text.toString(),
+                  ),
+                );
 
-                  result.fold(
-                    (l) {
-                      final snackbar = SnackBar(content: Text(l));
+                result.fold(
+                  (l) {
+                    final snackbar = SnackBar(content: Text(l));
 
-                      ScaffoldMessenger.of(context).showSnackBar(snackbar);
-                    },
-                    (r) {
-                      Navigator.pushAndRemoveUntil(
-                        context,
-                        MaterialPageRoute(
-                          builder: (context) => const RootPage(),
-                        ),
-                        (route) => false,
-                      );
-                    },
-                  );
-                },
-                title: 'Create Account',
-              ),
-              const SizedBox(
-                height: 30,
-              ),
-              _signinText(context),
-            ],
-          ),
+                    ScaffoldMessenger.of(context).showSnackBar(snackbar);
+                  },
+                  (r) {
+                    Navigator.pushAndRemoveUntil(
+                      context,
+                      MaterialPageRoute(
+                        builder: (context) => const RootPage(),
+                      ),
+                      (route) => false,
+                    );
+                  },
+                );
+              },
+              title: 'Create Account',
+            ),
+            const SizedBox(
+              height: 30,
+            ),
+            _signinText(context),
+          ],
         ),
       ),
     );
