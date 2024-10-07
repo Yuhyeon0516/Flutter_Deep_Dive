@@ -49,6 +49,8 @@ dependencies:
 
   dartz: ^0.10.1
 
+  just_audio: ^0.9.41
+
 dev_dependencies:
   flutter_test:
     sdk: flutter
