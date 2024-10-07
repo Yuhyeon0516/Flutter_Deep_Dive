@@ -48,7 +48,9 @@ class GetStartedPage extends StatelessWidget {
                     height: 21,
                   ),
                   const Text(
-                    'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.',
+                    '''
+Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.
+''',
                     style: TextStyle(
                       fontWeight: FontWeight.w500,
                       color: AppColors.grey,

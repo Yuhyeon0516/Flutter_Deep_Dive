@@ -55,7 +55,9 @@ class SignupOrSigninPage extends StatelessWidget {
                     height: 21,
                   ),
                   const Text(
-                    'Spotify is a proprietary Swedish audio streaming and media services provider',
+                    '''
+Spotify is a proprietary Swedish audio streaming and media services provider
+''',
                     style: TextStyle(
                       fontWeight: FontWeight.w500,
                       fontSize: 17,
