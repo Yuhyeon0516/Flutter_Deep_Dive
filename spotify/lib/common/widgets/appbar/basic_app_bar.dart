@@ -3,10 +3,12 @@ import 'package:spotify/common/helpers/is_dark_mode.dart';
 
 class BasicAppBar extends StatelessWidget implements PreferredSizeWidget {
   final Widget? title;
+  final Widget? action;
 
   const BasicAppBar({
     super.key,
     this.title,
+    this.action,
   });
 
   @override
@@ -38,6 +40,9 @@ class BasicAppBar extends StatelessWidget implements PreferredSizeWidget {
               ),
             )
           : null,
+      actions: [
+        action ?? Container(),
+      ],
     );
   }
 
