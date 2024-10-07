@@ -61,8 +61,9 @@ class _SigninPageState extends State<SigninPage> {
               const SizedBox(
                 height: 20,
               ),
-              const AuthGradientButton(
+              AuthGradientButton(
                 title: 'Sign In',
+                onPressed: () {},
               ),
               const SizedBox(
                 height: 20,

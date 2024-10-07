@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:full_course/core/theme/app_colors.dart';
+import 'package:full_course/features/auth/presentation/bloc/auth_bloc.dart';
 import 'package:full_course/features/auth/presentation/pages/signin_page.dart';
 import 'package:full_course/features/auth/presentation/widgets/auth_gradient_button.dart';
 import 'package:full_course/features/auth/presentation/widgets/auth_text_field.dart';
@@ -71,8 +73,19 @@ class _SignupPageState extends State<SignupPage> {
               const SizedBox(
                 height: 20,
               ),
-              const AuthGradientButton(
+              AuthGradientButton(
                 title: 'Sign Up',
+                onPressed: () {
+                  if (_formKey.currentState!.validate()) {
+                    context.read<AuthBloc>().add(
+                          AuthSignUp(
+                            email: emailController.text.trim(),
+                            password: passwordController.text.trim(),
+                            name: nameController.text.trim(),
+                          ),
+                        );
+                  }
+                },
               ),
               const SizedBox(
                 height: 20,
