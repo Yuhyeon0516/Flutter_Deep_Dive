@@ -1,3 +1,4 @@
+import 'package:full_course/core/common/cubits/app_user/app_user_cubit.dart';
 import 'package:full_course/core/secrets/app_secrets.dart';
 import 'package:full_course/features/auth/data/datasources/auth_remote_data_source.dart';
 import 'package:full_course/features/auth/data/repositories/auth_repository_impl.dart';
@@ -20,6 +21,8 @@ Future<void> initDependencies() async {
   );
 
   sl.registerLazySingleton<SupabaseClient>(() => supabase.client);
+
+  sl.registerLazySingleton<AppUserCubit>(() => AppUserCubit());
 }
 
 void _initAuth() {
@@ -58,6 +61,7 @@ void _initAuth() {
       userSignUp: sl<UserSignUp>(),
       userLogin: sl<UserLogin>(),
       currentUser: sl<CurrentUser>(),
+      appUserCubit: sl<AppUserCubit>(),
     ),
   );
 }

@@ -2,7 +2,7 @@ import 'package:fpdart/fpdart.dart';
 import 'package:full_course/core/error/failure.dart';
 import 'package:full_course/core/usecase/usecase.dart';
 import 'package:full_course/features/auth/domain/repository/auth_repository.dart';
-import 'package:full_course/features/auth/domain/entities/user.dart';
+import 'package:full_course/core/common/entities/user.dart';
 
 class UserSignUp implements UseCase<UserEntity, UserSignUpParams> {
   final AuthRepository authRepository;
