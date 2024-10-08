@@ -10,6 +10,7 @@ import 'package:full_course/features/auth/presentation/bloc/auth_bloc.dart';
 import 'package:full_course/features/blog/data/datasources/blog_remote_data_source.dart';
 import 'package:full_course/features/blog/data/repositories/blog_repository_impl.dart';
 import 'package:full_course/features/blog/domain/repositories/blog_repository.dart';
+import 'package:full_course/features/blog/domain/usecases/get_all_blogs.dart';
 import 'package:full_course/features/blog/domain/usecases/upload_blog.dart';
 import 'package:full_course/features/blog/presentation/bloc/blog_bloc.dart';
 import 'package:get_it/get_it.dart';
@@ -89,9 +90,14 @@ void _initBlog() {
     () => UploadBlog(sl<BlogRepository>()),
   );
 
+  sl.registerFactory<GetAllBlogs>(
+    () => GetAllBlogs(sl<BlogRepository>()),
+  );
+
   sl.registerLazySingleton(
     () => BlogBloc(
-      sl<UploadBlog>(),
+      uploadBlog: sl<UploadBlog>(),
+      getAllBlogs: sl<GetAllBlogs>(),
     ),
   );
 }
