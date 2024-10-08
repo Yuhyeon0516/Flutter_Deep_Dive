@@ -4,6 +4,7 @@ import 'package:full_course/core/common/cubits/app_user/app_user_cubit.dart';
 import 'package:full_course/core/theme/app_theme.dart';
 import 'package:full_course/features/auth/presentation/bloc/auth_bloc.dart';
 import 'package:full_course/features/auth/presentation/pages/signin_page.dart';
+import 'package:full_course/features/blog/presentation/bloc/blog_bloc.dart';
 import 'package:full_course/features/blog/presentation/pages/blog_page.dart';
 import 'package:full_course/init_dependencies.dart';
 
@@ -19,6 +20,9 @@ void main() async {
       ),
       BlocProvider(
         create: (_) => sl<AuthBloc>(),
+      ),
+      BlocProvider(
+        create: (_) => sl<BlogBloc>(),
       ),
     ],
     child: const MainApp(),

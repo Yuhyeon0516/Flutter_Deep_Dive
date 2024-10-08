@@ -18,6 +18,13 @@ class BlogEditor extends StatelessWidget {
         hintText: hintText,
       ),
       maxLines: null,
+      validator: (value) {
+        if (value!.isEmpty) {
+          return '$hintText가 비어있습니다.';
+        }
+
+        return null;
+      },
     );
   }
 }
