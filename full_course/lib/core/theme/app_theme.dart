@@ -15,6 +15,10 @@ class AppTheme {
     appBarTheme: const AppBarTheme(
       backgroundColor: AppColors.backgroundColor,
     ),
+    chipTheme: const ChipThemeData(
+      color: WidgetStatePropertyAll(AppColors.backgroundColor),
+      side: BorderSide.none,
+    ),
     inputDecorationTheme: InputDecorationTheme(
       contentPadding: const EdgeInsets.all(27),
       enabledBorder: _border(AppColors.borderColor),
