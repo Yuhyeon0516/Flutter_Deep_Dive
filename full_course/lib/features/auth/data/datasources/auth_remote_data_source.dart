@@ -1,14 +1,15 @@
 import 'package:full_course/core/error/exception.dart';
+import 'package:full_course/features/auth/data/models/user_model.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
 
 abstract interface class AuthRemoteDataSource {
-  Future<String> signUpWithEmailPaswword({
+  Future<UserModel> signUpWithEmailPaswword({
     required String name,
     required String email,
     required String password,
   });
 
-  Future<String> loginWithEmailPaswword({
+  Future<UserModel> loginWithEmailPaswword({
     required String email,
     required String password,
   });
@@ -22,7 +23,7 @@ class AuthRemoteDataSourceImpl implements AuthRemoteDataSource {
   );
 
   @override
-  Future<String> loginWithEmailPaswword({
+  Future<UserModel> loginWithEmailPaswword({
     required String email,
     required String password,
   }) {
@@ -30,7 +31,7 @@ class AuthRemoteDataSourceImpl implements AuthRemoteDataSource {
   }
 
   @override
-  Future<String> signUpWithEmailPaswword({
+  Future<UserModel> signUpWithEmailPaswword({
     required String name,
     required String email,
     required String password,
@@ -48,7 +49,7 @@ class AuthRemoteDataSourceImpl implements AuthRemoteDataSource {
         throw ServerException('유저가 존재하지 않습니다.');
       }
 
-      return response.user!.id;
+      return UserModel.fromJson(response.user!.toJson());
     } catch (e) {
       throw ServerException(e.toString());
     }
