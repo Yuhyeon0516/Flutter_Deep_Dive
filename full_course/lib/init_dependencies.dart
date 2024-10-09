@@ -1,4 +1,5 @@
 import 'package:full_course/core/common/cubits/app_user/app_user_cubit.dart';
+import 'package:full_course/core/network/connection_checker.dart';
 import 'package:full_course/core/secrets/app_secrets.dart';
 import 'package:full_course/features/auth/data/datasources/auth_remote_data_source.dart';
 import 'package:full_course/features/auth/data/repositories/auth_repository_impl.dart';
@@ -14,6 +15,7 @@ import 'package:full_course/features/blog/domain/usecases/get_all_blogs.dart';
 import 'package:full_course/features/blog/domain/usecases/upload_blog.dart';
 import 'package:full_course/features/blog/presentation/bloc/blog_bloc.dart';
 import 'package:get_it/get_it.dart';
+import 'package:internet_connection_checker_plus/internet_connection_checker_plus.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
 
 final sl = GetIt.instance;
@@ -29,7 +31,13 @@ Future<void> initDependencies() async {
 
   sl.registerLazySingleton<SupabaseClient>(() => supabase.client);
 
+  sl.registerFactory<InternetConnection>(() => InternetConnection());
+
   sl.registerLazySingleton<AppUserCubit>(() => AppUserCubit());
+
+  sl.registerFactory<ConnectionChecker>(
+    () => ConnectionCheckerImpl(sl<InternetConnection>()),
+  );
 }
 
 void _initAuth() {
@@ -42,6 +50,7 @@ void _initAuth() {
   sl.registerFactory<AuthRepository>(
     () => AuthRepositoryImpl(
       sl<AuthRemoteDataSource>(),
+      sl<ConnectionChecker>(),
     ),
   );
 
