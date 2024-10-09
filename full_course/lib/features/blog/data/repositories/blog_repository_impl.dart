@@ -46,4 +46,15 @@ class BlogRepositoryImpl implements BlogRepository {
       return left(Failure(e.meesage));
     }
   }
+
+  @override
+  Future<Either<Failure, List<BlogEntity>>> getAllBlogs() async {
+    try {
+      final blogs = await blogRemoteDataSource.getAllBlogs();
+
+      return right(blogs);
+    } on ServerException catch (e) {
+      return left(Failure(e.meesage));
+    }
+  }
 }
