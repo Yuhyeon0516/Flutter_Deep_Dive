@@ -8,7 +8,7 @@ import '../../helpers/json_reader.dart';
 
 void main() {
   const testWeatherModel = WeatherModel(
-    cityName: 'Seoul',
+    cityName: 'New York',
     main: 'Clear',
     description: 'clear sky',
     iconCode: '01n',
@@ -55,7 +55,7 @@ void main() {
           'pressure': 1012,
           'humidity': 70,
         },
-        'name': 'Seoul',
+        'name': 'New York',
       };
 
       expect(res, equals(expectedJsonMap));
