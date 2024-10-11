@@ -18,7 +18,7 @@ void main() {
 
   // repository에서 return해줄 entity를 정의
   const testWeatherDetail = WeatherEntity(
-    cityName: 'Seoul',
+    cityName: 'New York',
     main: 'Clouds',
     description: 'few clouds',
     iconCode: '02d',
@@ -28,7 +28,7 @@ void main() {
   );
 
   // usecase에서 요청할 cityname을 정의
-  const testCityName = 'Seoul';
+  const testCityName = 'New York';
 
   test('get current weather', () async {
     // mock repository의 getCurrentWeather가 호출되면 testWeatherDetail을 return하도록 정의
