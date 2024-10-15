@@ -1,6 +1,6 @@
 name: todo_bloc_retrofit
 description: "A new Flutter project."
-publish_to: 'none'
+publish_to: "none"
 version: 0.1.0
 
 environment:
@@ -9,6 +9,8 @@ environment:
 dependencies:
   flutter:
     sdk: flutter
+
+  hexcolor: ^3.0.1
 
 dev_dependencies:
   flutter_test:
