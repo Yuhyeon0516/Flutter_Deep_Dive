@@ -3,6 +3,7 @@ import 'package:todo_bloc_retrofit/helper/color_helper.dart';
 import 'package:todo_bloc_retrofit/helper/dimenssion_helper.dart';
 import 'package:todo_bloc_retrofit/helper/font_helper.dart';
 import 'package:todo_bloc_retrofit/helper/string_helper.dart';
+import 'package:todo_bloc_retrofit/routes/route_name.dart';
 import 'package:todo_bloc_retrofit/screens/todo.dart';
 
 class HomeScreen extends StatelessWidget {
@@ -52,7 +53,15 @@ class HomeScreen extends StatelessWidget {
           ],
         ),
         floatingActionButton: FloatingActionButton(
-          onPressed: () {},
+          onPressed: () {
+            Navigator.pushNamed(
+              context,
+              RouteName.addAndUpdateTodoScreen,
+              arguments: {
+                'type': 'add',
+              },
+            );
+          },
           backgroundColor: ColorHelper.secondaryColor,
           child: Icon(
             Icons.add,

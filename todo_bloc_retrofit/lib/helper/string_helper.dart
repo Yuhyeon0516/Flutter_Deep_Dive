@@ -11,5 +11,7 @@ class StringHelper {
   static const String sorryThingWentWrong = 'Sorry thing went wrong';
   static const String all = 'All';
   static const String todo = 'Todo';
+  static const String addTodo = 'Add Todo';
+  static const String updateTodo = 'Update Todo';
   static const String done = 'Done';
 }

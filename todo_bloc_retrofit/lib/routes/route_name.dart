@@ -8,4 +8,5 @@ class RouteName {
   }
 
   static const String homeScreen = 'home_screen';
+  static const String addAndUpdateTodoScreen = 'add_and_update_todo_screen';
 }

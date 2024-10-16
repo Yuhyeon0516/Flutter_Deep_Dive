@@ -14,6 +14,7 @@ class DimenssionHelper {
   static const double size20 = 20.0;
   static const double size30 = 30.0;
   static const double size35 = 35.0;
+  static const double size45 = 45.0;
   static const double size50 = 50.0;
   static const double size80 = 80.0;
   static const double size100 = 100.0;
