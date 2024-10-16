@@ -2,12 +2,15 @@ import 'package:flutter/material.dart';
 import 'package:todo_bloc_retrofit/helper/color_helper.dart';
 import 'package:todo_bloc_retrofit/helper/dimenssion_helper.dart';
 import 'package:todo_bloc_retrofit/helper/font_helper.dart';
+import 'package:todo_bloc_retrofit/models/get_all_todo_model.dart';
 import 'package:todo_bloc_retrofit/routes/route_name.dart';
 import 'package:todo_bloc_retrofit/screens/delete_button.dart';
 import 'package:todo_bloc_retrofit/screens/done_button.dart';
+import 'package:todo_bloc_retrofit/utils/date_format.dart';
 
 class Todo extends StatelessWidget {
-  const Todo({super.key});
+  final List<Items> items;
+  const Todo({super.key, required this.items});
 
   @override
   Widget build(BuildContext context) {
@@ -47,7 +50,7 @@ class Todo extends StatelessWidget {
                   children: [
                     Expanded(
                       child: Text(
-                        'Title',
+                        items[index].title!,
                         style: TextStyle(
                           color: ColorHelper.blackColor,
                           fontWeight: FontHelper.w500,
@@ -60,7 +63,7 @@ class Todo extends StatelessWidget {
                   ],
                 ),
                 Text(
-                  'Description',
+                  items[index].description!,
                   style: TextStyle(
                     color: ColorHelper.blackColor,
                     fontWeight: FontHelper.w400,
@@ -73,7 +76,9 @@ class Todo extends StatelessWidget {
                 Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
-                    const DoneButton(),
+                    DoneButton(
+                      items: items[index],
+                    ),
                     Container(
                       alignment: Alignment.center,
                       padding: const EdgeInsets.symmetric(
@@ -88,7 +93,7 @@ class Todo extends StatelessWidget {
                             BorderRadius.circular(DimenssionHelper.size50),
                       ),
                       child: Text(
-                        '2024-03-29',
+                        dateFormat(items[index].createdAt!),
                         style: TextStyle(
                           color: ColorHelper.blackColor,
                           fontWeight: FontHelper.w400,
@@ -106,7 +111,7 @@ class Todo extends StatelessWidget {
       separatorBuilder: (context, index) => const SizedBox(
         height: DimenssionHelper.size8,
       ),
-      itemCount: 10,
+      itemCount: items.length,
     );
   }
 }

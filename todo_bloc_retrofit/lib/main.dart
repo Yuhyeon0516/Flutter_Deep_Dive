@@ -13,9 +13,25 @@ class MainApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return const MaterialApp(
+    return MaterialApp(
       debugShowCheckedModeBanner: false,
       initialRoute: RouteName.homeScreen,
+      theme: ThemeData(
+        splashColor: Colors.transparent,
+        highlightColor: Colors.transparent,
+        floatingActionButtonTheme: const FloatingActionButtonThemeData(
+          splashColor: Colors.transparent,
+          highlightElevation: 0,
+        ),
+        appBarTheme: const AppBarTheme(
+          elevation: 0,
+          scrolledUnderElevation: 0,
+        ),
+        tabBarTheme: const TabBarTheme(
+          splashFactory: NoSplash.splashFactory,
+          overlayColor: WidgetStatePropertyAll(Colors.transparent),
+        ),
+      ),
       onGenerateRoute: Routes.onGenerateRoute,
     );
   }

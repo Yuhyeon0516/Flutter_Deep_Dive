@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:todo_bloc_retrofit/cubit/get_todo_list/cubit/get_todo_list_cubit.dart';
 import 'package:todo_bloc_retrofit/helper/color_helper.dart';
 import 'package:todo_bloc_retrofit/helper/dimenssion_helper.dart';
 import 'package:todo_bloc_retrofit/helper/font_helper.dart';
@@ -45,12 +47,37 @@ class HomeScreen extends StatelessWidget {
             ],
           ),
         ),
-        body: const TabBarView(
-          children: [
-            Todo(),
-            Todo(),
-            Todo(),
-          ],
+        body: BlocConsumer<GetTodoListCubit, GetTodoListState>(
+          listener: (context, state) {
+            debugPrint(state.toString());
+          },
+          builder: (context, state) {
+            if (state is GetTodoListLoading) {
+              return const Center(
+                child: CircularProgressIndicator(),
+              );
+            }
+
+            if (state is GetTodoListLoaded) {
+              return TabBarView(
+                children: [
+                  Todo(
+                    items: state.all,
+                  ),
+                  Todo(
+                    items: state.todo,
+                  ),
+                  Todo(
+                    items: state.done,
+                  ),
+                ],
+              );
+            }
+
+            return const Center(
+              child: Text('Something....?'),
+            );
+          },
         ),
         floatingActionButton: FloatingActionButton(
           onPressed: () {
